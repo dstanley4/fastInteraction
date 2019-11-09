@@ -222,8 +222,22 @@ fast.int <- function(data, criterion, predictor, moderator, center.predictors = 
 
   simple.slope.table <- dplyr::select(simple.slope.table, -modvalue)
 
-  print(summary(lm_object.orig))
-  print(apaTables::apa.reg.table(lm_object.orig))
+  reg.sum.table <- summary(lm_object.orig)
+  summary.p.values <- sprintf("%1.3f",reg.sum.table$coefficients[,"Pr(>|t|)"])
+  summary.p.values <- c(summary.p.values, "","","")
+
+  # report overall F here with a sprint statement
+
+
+  apa.out <- apaTables::apa.reg.table(lm_object.orig)
+  apa.out.tablebody <- apa.out$table_body
+  apa.out.tablebody$p <- summary.p.values
+  apa.temp <- apa.out.tablebody[,1:5]
+  apa.p <- apa.out.tablebody[,7]
+  apa.fit <- apa.out.tablebody[,6]
+  apa.out.tablebody <- cbind(apa.temp, p = apa.p, Fit = apa.fit)
+  apa.out$table_body <- apa.out.tablebody
+  print(apa.out)
 
   output <- list(simple.slope.table = simple.slope.table,
                  graph = graph.object)
