@@ -4,7 +4,8 @@
 \alias{fast.int}
 \title{Creates a table of means and standard deviations for a 2-way ANOVA design in APA style}
 \usage{
-fast.int(lm_object, criterion, predictor, moderator, axis.labels = NULL)
+fast.int(lm_object, criterion, predictor, moderator, axis.labels = NULL,
+  center.predictors = FALSE)
 }
 \arguments{
 \item{lm_object}{Name of independent variable 1 column in data frame}
@@ -16,10 +17,31 @@ fast.int(lm_object, criterion, predictor, moderator, axis.labels = NULL)
 \item{moderator}{Project data frame name}
 
 \item{axis.labels}{test}
+
+\item{center.predictors}{test}
 }
 \value{
 APA table object
 }
 \description{
 Creates a table of means and standard deviations for a 2-way ANOVA design in APA style
+}
+\examples{
+head(grades)
+
+lm_object <- lm(exam ~ anxiety + preparation + anxiety*preparation, data = grades)
+
+# Example 1: Not mean centered
+fast.int(lm_object,
+         criterion = exam,
+         predictor = preparation,
+         moderator = anxiety)
+
+# Example 2: Mean centered
+fast.int(lm_object,
+         criterion = exam,
+         predictor = preparation,
+         moderator = anxiety,
+         center.predictors = TRUE)
+
 }

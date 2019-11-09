@@ -4,9 +4,33 @@
 #' @param predictor Name of dependent variable column in data frame
 #' @param moderator Project data frame name
 #' @param axis.labels test
+#' @param center.predictors test
 #' @return APA table object
+#' @examples
+#' head(grades)
+#'
+#' lm_object <- lm(exam ~ anxiety + preparation + anxiety*preparation, data = grades)
+#'
+#' # Example 1: Not mean centered
+#' fast.int(lm_object,
+#'          criterion = exam,
+#'          predictor = preparation,
+#'          moderator = anxiety)
+#'
+#' # Example 2: Mean centered
+#' fast.int(lm_object,
+#'          criterion = exam,
+#'          predictor = preparation,
+#'          moderator = anxiety,
+#'          center.predictors = TRUE)
+#'
 #' @export
-fast.int <- function(lm_object, criterion, predictor, moderator, axis.labels = NULL) {
+fast.int <- function(lm_object, criterion, predictor, moderator, axis.labels = NULL, center.predictors = FALSE) {
+
+
+  if (center.predictors == TRUE) {
+    lm_object <- jtools::summ(lm_object, center = TRUE)$model
+  }
 
   data <- lm_object$model
   data.col.names <- names(data)
@@ -18,6 +42,8 @@ fast.int <- function(lm_object, criterion, predictor, moderator, axis.labels = N
 
   criterion.sub <- substitute(criterion)
   is.criterion  <- is.valid.name(criterion.sub, data.col.names)
+
+
 
 
   if (is.criterion==FALSE) {
