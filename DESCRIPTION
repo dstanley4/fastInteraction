@@ -10,7 +10,9 @@ Imports:
     stats,
     plotly,
     jtools,
-    interactions
+    interactions,
+    dplyr,
+    apaTables
 License: MIT License + file LICENSE
 Date: 2019-11-08
 RoxygenNote: 6.1.1

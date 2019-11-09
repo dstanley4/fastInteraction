@@ -21,6 +21,6 @@
 #'Author: \tab David J. Stanley \email{dstanley@@uoguelph.ca}\cr
 #'Maintainer: \tab David J. Stanley \email{dstanley@@uoguelph.ca}
 #'}
-#'@importFrom "stats" "sd" "predict"
+#'@importFrom "stats" "sd" "predict" "as.formula"
 #'@importFrom "plotly" "add_surface" "add_trace" "layout" "plot_ly"
 NULL

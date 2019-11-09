@@ -2,13 +2,13 @@
 % Please edit documentation in R/main.R
 \name{fast.int}
 \alias{fast.int}
-\title{Creates a table of means and standard deviations for a 2-way ANOVA design in APA style}
+\title{Creates a MMR plot and output}
 \usage{
-fast.int(lm_object, criterion, predictor, moderator, axis.labels = NULL,
-  center.predictors = FALSE)
+fast.int(data, criterion, predictor, moderator,
+  center.predictors = FALSE, axis.labels = NULL)
 }
 \arguments{
-\item{lm_object}{Name of independent variable 1 column in data frame}
+\item{data}{Name of data frame for interaction}
 
 \item{criterion}{Name of independent variable 2 column in data frame}
 
@@ -16,32 +16,13 @@ fast.int(lm_object, criterion, predictor, moderator, axis.labels = NULL,
 
 \item{moderator}{Project data frame name}
 
-\item{axis.labels}{test}
-
 \item{center.predictors}{test}
+
+\item{axis.labels}{test}
 }
 \value{
-APA table object
+plotly object
 }
 \description{
-Creates a table of means and standard deviations for a 2-way ANOVA design in APA style
-}
-\examples{
-head(grades)
-
-lm_object <- lm(exam ~ anxiety + preparation + anxiety*preparation, data = grades)
-
-# Example 1: Not mean centered
-fast.int(lm_object,
-         criterion = exam,
-         predictor = preparation,
-         moderator = anxiety)
-
-# Example 2: Mean centered
-fast.int(lm_object,
-         criterion = exam,
-         predictor = preparation,
-         moderator = anxiety,
-         center.predictors = TRUE)
-
+Creates a MMR plot and output
 }
