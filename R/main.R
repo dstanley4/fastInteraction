@@ -146,6 +146,14 @@ fast.plot <- function(lm_object, criterion, predictor, moderator, center.predict
 #' @param moderator Project data frame name
 #' @param axis.labels test
 #' @param center.predictors test
+#' @examples
+#'
+#' fast.int(data = grades,
+#'          criterion = exam,
+#'          predictor = preparation,
+#'          moderator = anxiety,
+#'          center.predictors = TRUE)
+#'
 #' @return plotly object
 #' @export
 fast.int <- function(data, criterion, predictor, moderator, center.predictors = FALSE, axis.labels = NULL) {
@@ -190,6 +198,58 @@ fast.int <- function(data, criterion, predictor, moderator, center.predictors = 
     lm_object.orig <- jtools::summ(lm_object.orig, center = TRUE)$model
   }
 
+  b0.intercept <- as.numeric(lm_object.orig$coefficients["(Intercept)"])
+  b.predictor <- as.numeric(lm_object.orig$coefficients[predictor.name])
+  b.moderator <- as.numeric(lm_object.orig$coefficients[moderator.name])
+  b.interaction <- as.numeric(lm_object.orig$coefficients[paste(predictor.name, moderator.name, sep = ":")])
+
+  predictor.processed <- lm_object.orig$model[predictor.name][,]
+  moderator.processed <- lm_object.orig$model[moderator.name][,]
+
+
+  moderator.value.mean    <- mean(moderator.processed, na.rm = TRUE)
+  moderator.value.plusSD  <- moderator.value.mean + sd(moderator.processed, na.rm = TRUE)
+  moderator.value.minusSD <- moderator.value.mean - sd(moderator.processed, na.rm = TRUE)
+  moderator.values <- c(moderator.value.minusSD, moderator.value.mean, moderator.value.plusSD)
+  moderator.labels<-  paste(c("-1 SD", "Mean", "+1 SD"),moderator.name, sep = " ")
+
+  simple.slopes     <- b.predictor + b.interaction * moderator.values
+  simple.intercepts <- b0.intercept + b.moderator * moderator.values
+
+  simple.slope.table = data.frame(moderator = moderator.labels,
+                                  moderator.values = moderator.values,
+                                  b1.slope = simple.slopes,
+                                  b0.intercept = simple.intercepts)
+
+
+  # calculate 2D plot values
+  predictor.value.mean    <- mean(predictor.processed, na.rm = TRUE)
+  predictor.value.minusSD <- predictor.value.mean - sd(predictor.processed, na.rm = TRUE)
+  predictor.value.plusSD  <- predictor.value.mean + sd(predictor.processed, na.rm = TRUE)
+
+  low.predictor.table <- simple.slope.table
+  low.predictor.table$predictor <- predictor.value.minusSD
+  low.predictor.table$criterion <- simple.slope.table$b1.slope*low.predictor.table$predictor + simple.slope.table$b0.intercept
+
+  high.predictor.table <- simple.slope.table
+  high.predictor.table$predictor <- predictor.value.plusSD
+  high.predictor.table$criterion <- simple.slope.table$b1.slope*high.predictor.table$predictor + simple.slope.table$b0.intercept
+
+  plot.table <- rbind(low.predictor.table, high.predictor.table)
+  #print(plot.table)
+
+  graph2D <- ggplot(plot.table, aes(x=predictor,
+                                    y = criterion,
+                                    group = as.factor(moderator),
+                                    linetype = as.factor(moderator))) +
+    geom_line(size = 1) +
+    theme_classic(14) +
+    labs(x = predictor.name, linetype = moderator.name, y = criterion.name)
+
+
+  names(simple.slope.table) <- c(moderator.name, paste(moderator.name,"value"),paste("b1",predictor.name, sep ="."), "b0")
+
+
   axis.labels <- list(criterion = criterion.name,
                       predictor = predictor.name,
                       moderator = moderator.name)
@@ -201,32 +261,10 @@ fast.int <- function(data, criterion, predictor, moderator, center.predictors = 
                             center.predictors = FALSE,
                             axis.labels = axis.labels)
 
-  simple.slope.data <- interactions::sim_slopes(lm_object, pred = xv, modx = mv)$slope
-
-  simple.slope.data.rounded <- round(simple.slope.data,2)
-  simple.slope.data.rounded$p <- round(simple.slope.data$p,3)
-
-  line.for <- paste(moderator.name, c("(-1 SD)", "(Mean)","(+1 SD)"), sep = " ")
-  simple.slope.table <- cbind(line.for, simple.slope.data.rounded)
-
-  linename <- "Moderator Value"
-  linevalue  <- "modvalue"
-  slopevalue <- "b"
-  sevalue <- "SE"
-  LLvalue <- "LL"
-  ULvalue <- "UL"
-  tvalue <- "t"
-  pvalue <- "p"
-  new.col.names <- c(linename, linevalue, slopevalue, sevalue, LLvalue, ULvalue, tvalue, pvalue)
-  names(simple.slope.table) <- new.col.names
-
-  simple.slope.table <- dplyr::select(simple.slope.table, -modvalue)
 
   reg.sum.table <- summary(lm_object.orig)
   summary.p.values <- sprintf("%1.3f",reg.sum.table$coefficients[,"Pr(>|t|)"])
   summary.p.values <- c(summary.p.values, "","","")
-
-  # report overall F here with a sprint statement
 
 
   apa.out <- apaTables::apa.reg.table(lm_object.orig)
@@ -237,10 +275,37 @@ fast.int <- function(data, criterion, predictor, moderator, center.predictors = 
   apa.fit <- apa.out.tablebody[,6]
   apa.out.tablebody <- cbind(apa.temp, p = apa.p, Fit = apa.fit)
   apa.out$table_body <- apa.out.tablebody
-  print(apa.out)
+  #print(apa.out)
 
-  output <- list(simple.slope.table = simple.slope.table,
-                 graph = graph.object)
+
+  # report overall F here with a sprint statement
+
+  fvalue <- reg.sum.table$fstatistic[1]
+  df1 = reg.sum.table$fstatistic[2]
+  df2 = reg.sum.table$fstatistic[3]
+  pfvalue <- pf(fvalue, df1, df2, lower.tail = FALSE)
+
+  Overall_R2_F <- sprintf("F(%g, %g) = %1.2f, p = %1.3f",
+                    df1,
+                    df2,
+                    fvalue,
+                    pfvalue)
+
+
+  # add 2D graph rescaled to output
+  # graph.object.2D <- interactions::interact_plot(model = lm_object,
+  #                                  pred = xv,
+  #                                  modx = mv,
+  #                                  centered = "none") # centered elsewhere
+
+
+
+
+
+  output <- list(apa.table = apa.out,
+                 Overall_R2_F = Overall_R2_F,
+                 simple.slope.table = simple.slope.table,
+                 graph2D = graph2D)
 
 
 

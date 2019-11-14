@@ -26,3 +26,12 @@ plotly object
 \description{
 Creates a MMR plot and output
 }
+\examples{
+
+fast.int(data = grades,
+         criterion = exam,
+         predictor = preparation,
+         moderator = anxiety,
+         center.predictors = TRUE)
+
+}

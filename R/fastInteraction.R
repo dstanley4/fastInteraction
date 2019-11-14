@@ -21,6 +21,8 @@
 #'Author: \tab David J. Stanley \email{dstanley@@uoguelph.ca}\cr
 #'Maintainer: \tab David J. Stanley \email{dstanley@@uoguelph.ca}
 #'}
-#'@importFrom "stats" "sd" "predict" "as.formula"
+#'@importFrom "stats" "sd" "predict" "as.formula" "lm" "pf"
 #'@importFrom "plotly" "add_surface" "add_trace" "layout" "plot_ly"
+#'@importFrom "ggplot2" "coord_cartesian" "scale_x_continuous" "labs" "theme_classic" "ggplot" "aes" "geom_line"
+utils::globalVariables(c("zv", "xv", "mv", "modvalue"))
 NULL

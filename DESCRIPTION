@@ -12,7 +12,8 @@ Imports:
     jtools,
     interactions,
     dplyr,
-    apaTables
+    apaTables,
+    ggplot2
 License: MIT License + file LICENSE
 Date: 2019-11-08
 RoxygenNote: 6.1.1
