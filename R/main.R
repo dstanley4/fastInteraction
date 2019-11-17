@@ -130,12 +130,15 @@ fast.plot <- function(lm_object, criterion, predictor, moderator, center.predict
                                                     range = c(min(x.seq), max(x.seq)),
                                                     ticktype = "array",
                                                     tickvals = x.seq),
+                                       yaxis = list(title = moderator.axis.name,
+                                                    range = c(min(m.seq), max(m.seq)),
+                                                    ticktype = "array",
+                                                    tickvals = m.seq),
+                                       zaxis = list(title = criterion.axis.name),
+                                       camera = list(eye = list(x = 2, y = -2, z = 1.25), zoom = 5),
                                        aspectmode = "cube",
                                        aspectratio = list(x = 1, y = 1, z = 0.95),
-                          yaxis = list(title = moderator.axis.name, range = c(min(m.seq), max(m.seq)), ticktype = "array", tickvals = m.seq),
-                          zaxis = list(title = criterion.axis.name),
-                          camera = list(eye = list(x = 2, y = -2, z = 1.25), zoom = 5),
-                          showlegend = TRUE))
+                                       showlegend = TRUE))
 
   return(surface.graph)
 
@@ -285,9 +288,9 @@ fast.int <- function(data, criterion, predictor, moderator, center.predictors = 
     labs(x = predictor.name, linetype = moderator.name, y = criterion.name)
 
 
-  #axis.labels <- list(criterion = criterion.name,
-  #                    predictor = predictor.name,
-  #                    moderator = moderator.name)
+  axis.labels <- list(criterion = criterion.name,
+                     predictor = predictor.name,
+                     moderator = moderator.name)
 
   graph3D <- fast.plot(lm_object = lm_object,
                             criterion = zv,
