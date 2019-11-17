@@ -10,10 +10,11 @@ Imports:
     stats,
     plotly,
     jtools,
-    interactions,
     dplyr,
     apaTables,
-    ggplot2
+    ggplot2,
+    tidyr,
+    forcats
 License: MIT License + file LICENSE
 Date: 2019-11-08
 RoxygenNote: 6.1.1

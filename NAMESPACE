@@ -2,6 +2,8 @@
 
 export(fast.int)
 export(fast.plot)
+importFrom("dplyr","select")
+importFrom("forcats","fct_relevel")
 importFrom("ggplot2","aes")
 importFrom("ggplot2","coord_cartesian")
 importFrom("ggplot2","geom_line")
@@ -18,3 +20,4 @@ importFrom("stats","lm")
 importFrom("stats","pf")
 importFrom("stats","predict")
 importFrom("stats","sd")
+importFrom("tidyr","gather")

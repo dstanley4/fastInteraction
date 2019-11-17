@@ -22,12 +22,13 @@ calculate.surface <- function(lm_object, criterion, predictor, moderator, criter
   new.data[,1] = predict(object = lm_object, newdata = new.data)
 
   surface.predicted.values <- matrix(rep(NA, length.x.seq*length.m.seq), length.x.seq, length.m.seq)
+
   rownames(surface.predicted.values) <- round(x.seq,2)
   colnames(surface.predicted.values) <- round(m.seq,2)
 
   cur_row <- 0
-  for (x in 1:length(x.seq)) {
-    for (m in 1:length(m.seq)) {
+  for (m in 1:length(m.seq)) {
+    for (x in 1:length(x.seq)) {
       cur_row <- cur_row + 1
       surface.predicted.values[m, x] <- new.data[cur_row,1]
     }
