@@ -126,7 +126,12 @@ fast.plot <- function(lm_object, criterion, predictor, moderator, center.predict
                              name = "+1 SD line")
 
   surface.graph <- layout(surface.graph,
-                          scene = list(xaxis = list(title = predictor.axis.name, range = c(min(x.seq), max(x.seq)), ticktype = "array", tickvals = x.seq),
+                          scene = list(xaxis = list(title = predictor.axis.name,
+                                                    range = c(min(x.seq), max(x.seq)),
+                                                    ticktype = "array",
+                                                    tickvals = x.seq,
+                                                    aspectratio=list(x=1, y=1, z=0.95),
+                                                    aspectmode = "cube"),
                           yaxis = list(title = moderator.axis.name, range = c(min(m.seq), max(m.seq)), ticktype = "array", tickvals = m.seq),
                           zaxis = list(title = criterion.axis.name),
                           camera = list(eye = list(x = 2, y = -2, z = 1.25), zoom = 5),
@@ -188,10 +193,10 @@ fast.int <- function(data, criterion, predictor, moderator, center.predictors = 
 
 
   formula.orig <- get.formula.orig.vars(criterion.name, predictor.name, moderator.name)
-  lm_object.orig <- lm(formula = formula.orig, data = data)
+  lm_object.orig <- lm(formula = formula.orig, data = data, na.action="na.exclude")
 
   xmz.data <- data.frame(zv = criterion, xv = predictor, mv = moderator)
-  lm_object <- lm(formula = as.formula("zv ~ xv + mv + xv*mv"), data = xmz.data)
+  lm_object <- lm(formula = as.formula("zv ~ xv + mv + xv*mv"), data = xmz.data, na.action="na.exclude")
 
   if (center.predictors == TRUE) {
     lm_object <- jtools::summ(lm_object, center = TRUE)$model
@@ -222,45 +227,74 @@ fast.int <- function(data, criterion, predictor, moderator, center.predictors = 
                                   b0.intercept = simple.intercepts)
 
 
+  # Calculate simple slope significance
+  covmatrix <- vcov(lm_object.orig)[2:4,2:4] # omit intercept from covariance matrix
+  SE2B11 <- covmatrix[1,1]
+  SE2B22 <- covmatrix[2,2]
+  SE2B33 <- covmatrix[3,3]
+  COV13 <- covmatrix[1,3]
+  COV23 <- covmatrix[2,3]
+  Z <- simple.slope.table$moderator.values
+  simple.slope.table$SE_B <- sqrt(SE2B11 + 2*Z*COV13 + (Z^2) * SE2B33)
+  simple.slope.table$t <- (b.predictor + b.interaction*Z) / simple.slope.table$SE_B
+  N <- dim(lm_object.orig$model)[1]
+  df <- N - 3 -1
+  simple.slope.table$p <- 1-pt(q = abs(simple.slope.table$t), df = df)
+  simple.slope.table$p <- round(simple.slope.table$p *2, 4)
+
+  # Calculate CI for simple slopes
+  me <- qt(.975, df = df) * simple.slope.table$SE_B
+  simple.slope.table$b1.LL <- simple.slope.table$b1.slope - me
+  simple.slope.table$b1.UL <- simple.slope.table$b1.slope + me
+
   # calculate 2D plot values
   predictor.value.mean    <- mean(predictor.processed, na.rm = TRUE)
   predictor.value.minusSD <- predictor.value.mean - sd(predictor.processed, na.rm = TRUE)
   predictor.value.plusSD  <- predictor.value.mean + sd(predictor.processed, na.rm = TRUE)
 
-  low.predictor.table <- simple.slope.table
-  low.predictor.table$predictor <- predictor.value.minusSD
-  low.predictor.table$criterion <- simple.slope.table$b1.slope*low.predictor.table$predictor + simple.slope.table$b0.intercept
+  simple.slope.table$pred.lo <- simple.slope.table$b0.intercept + simple.slope.table$b1.slope * predictor.value.minusSD
+  simple.slope.table$pred.hi <- simple.slope.table$b0.intercept + simple.slope.table$b1.slope * predictor.value.plusSD
 
-  high.predictor.table <- simple.slope.table
-  high.predictor.table$predictor <- predictor.value.plusSD
-  high.predictor.table$criterion <- simple.slope.table$b1.slope*high.predictor.table$predictor + simple.slope.table$b0.intercept
+  plot.table <- select(simple.slope.table, moderator, pred.lo, pred.hi)
+  plot.table <- gather(data = plot.table,
+                       key = predictor,
+                       value = criterion,
+                       pred.lo:pred.hi,
+                       factor_key = FALSE)
 
-  plot.table <- rbind(low.predictor.table, high.predictor.table)
-  #print(plot.table)
+  plot.table$predictor[plot.table$predictor == "pred.lo"] <-as.character(predictor.value.minusSD)
+  plot.table$predictor[plot.table$predictor == "pred.hi"] <-as.character(predictor.value.plusSD)
+  plot.table$predictor <- as.numeric(plot.table$predictor)
+
+  crit.min <- mean(lm_object.orig$model[,1], na.rm = TRUE) - sd(lm_object.orig$model[,1], na.rm = TRUE)
+  crit.max <- mean(lm_object.orig$model[,1], na.rm = TRUE) + sd(lm_object.orig$model[,1], na.rm = TRUE)
+
+  plot.table$moderator <- fct_relevel(plot.table$moderator,
+                                      levels(plot.table$moderator)[plot.table$moderator[3]],
+                                      levels(plot.table$moderator)[plot.table$moderator[2]],
+                                      levels(plot.table$moderator)[plot.table$moderator[1]])
 
   graph2D <- ggplot(plot.table, aes(x=predictor,
                                     y = criterion,
                                     group = as.factor(moderator),
                                     linetype = as.factor(moderator))) +
     geom_line(size = 1) +
+    coord_cartesian(ylim = c(crit.min, crit.max)) +
+    scale_x_continuous(breaks = round(seq(predictor.value.minusSD, predictor.value.plusSD, by = predictor.value.plusSD),2)) +
     theme_classic(14) +
     labs(x = predictor.name, linetype = moderator.name, y = criterion.name)
 
 
-  names(simple.slope.table) <- c(moderator.name, paste(moderator.name,"value"),paste("b1",predictor.name, sep ="."), "b0")
+  #axis.labels <- list(criterion = criterion.name,
+  #                    predictor = predictor.name,
+  #                    moderator = moderator.name)
 
-
-  axis.labels <- list(criterion = criterion.name,
-                      predictor = predictor.name,
-                      moderator = moderator.name)
-
-  graph.object <- fast.plot(lm_object = lm_object,
+  graph3D <- fast.plot(lm_object = lm_object,
                             criterion = zv,
                             predictor = xv,
                             moderator = mv,
                             center.predictors = FALSE,
                             axis.labels = axis.labels)
-
 
   reg.sum.table <- summary(lm_object.orig)
   summary.p.values <- sprintf("%1.3f",reg.sum.table$coefficients[,"Pr(>|t|)"])
@@ -292,20 +326,12 @@ fast.int <- function(data, criterion, predictor, moderator, center.predictors = 
                     pfvalue)
 
 
-  # add 2D graph rescaled to output
-  # graph.object.2D <- interactions::interact_plot(model = lm_object,
-  #                                  pred = xv,
-  #                                  modx = mv,
-  #                                  centered = "none") # centered elsewhere
-
-
-
-
 
   output <- list(apa.table = apa.out,
                  Overall_R2_F = Overall_R2_F,
                  simple.slope.table = simple.slope.table,
-                 graph2D = graph2D)
+                 graph2D = graph2D,
+                 graph3D = graph3D)
 
 
 
