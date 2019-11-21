@@ -70,14 +70,14 @@ fast.int <- function(data, criterion, predictor, moderator, center.predictors = 
   moderator.value.mean    <- mean(moderator.processed, na.rm = TRUE)
   moderator.value.plusSD  <- moderator.value.mean + sd(moderator.processed, na.rm = TRUE)
   moderator.value.minusSD <- moderator.value.mean - sd(moderator.processed, na.rm = TRUE)
-  moderator.values <- c(moderator.value.minusSD, moderator.value.mean, moderator.value.plusSD)
+  moderator.value <- c(moderator.value.minusSD, moderator.value.mean, moderator.value.plusSD)
   moderator.labels<-  paste(c("-1 SD", "Mean", "+1 SD"),moderator.name, sep = " ")
 
-  simple.slopes     <- b.predictor + b.interaction * moderator.values
-  simple.intercepts <- b0.intercept + b.moderator * moderator.values
+  simple.slopes     <- b.predictor + b.interaction * moderator.value
+  simple.intercepts <- b0.intercept + b.moderator * moderator.value
 
   simple.slope.table = data.frame(moderator = moderator.labels,
-                                  moderator.values = moderator.values,
+                                  moderator.value = moderator.value,
                                   b1.slope = simple.slopes,
                                   b0.intercept = simple.intercepts)
 
@@ -89,7 +89,7 @@ fast.int <- function(data, criterion, predictor, moderator, center.predictors = 
   SE2B33 <- covmatrix[3,3]
   COV13 <- covmatrix[1,3]
   COV23 <- covmatrix[2,3]
-  Z <- simple.slope.table$moderator.values
+  Z <- simple.slope.table$moderator.value
   simple.slope.table$SE_B <- sqrt(SE2B11 + 2*Z*COV13 + (Z^2) * SE2B33)
   simple.slope.table$t <- (b.predictor + b.interaction*Z) / simple.slope.table$SE_B
   N <- dim(lm_object.orig$model)[1]
@@ -168,23 +168,35 @@ fast.int <- function(data, criterion, predictor, moderator, center.predictors = 
 
 
   # report overall F here with a sprint statement
-
+  R2 <- reg.sum.table$r.squared
   fvalue <- reg.sum.table$fstatistic[1]
   df1 = reg.sum.table$fstatistic[2]
   df2 = reg.sum.table$fstatistic[3]
   pfvalue <- pf(fvalue, df1, df2, lower.tail = FALSE)
 
-  Overall_R2_F <- sprintf("F(%g, %g) = %1.2f, p = %1.3f",
+  Overall_R2_F <- sprintf("R2 = %1.2f, F(%g, %g) = %1.2f, p = %1.3f",
+                    R2,
                     df1,
                     df2,
                     fvalue,
                     pfvalue)
 
 
+  simple.slope.table.out <- simple.slope.table[,1:9]
 
+  simple.slope.table.out <- dplyr::select(simple.slope.table.out,
+                                          moderator,
+                                          moderator.value,
+                                          b1.slope,
+                                          b1.LL,
+                                          b1.UL,
+                                          b0.intercept,
+                                          SE_B,
+                                          t,
+                                          p)
   output <- list(apa.table = apa.out,
                  Overall_R2_F = Overall_R2_F,
-                 simple.slope.table = simple.slope.table,
+                 simple.slope.table = simple.slope.table.out,
                  graph2D = graph2D,
                  graph3D = graph3D)
 

@@ -81,9 +81,6 @@ fast.plot <- function(lm_object, criterion, predictor, moderator, center.predict
   surface.information <- calculate.surface(lm_object, criterion, predictor, moderator, criterion.name, predictor.name, moderator.name)
   surface.predicted.values <- surface.information$surface.predicted.values
 
-  print(surface.predicted.values)
-
-
   line1data <- surface.information$line1data
   line2data <- surface.information$line2data
   x.seq <- surface.information$x.seq
