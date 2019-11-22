@@ -121,19 +121,20 @@ fast.int <- function(data, criterion, predictor, moderator, center.predictors = 
   plot.table$predictor[plot.table$predictor == "pred.hi"] <-as.character(predictor.value.plusSD)
   plot.table$predictor <- as.numeric(plot.table$predictor)
 
-  crit.min <- mean(lm_object.orig$model[,1], na.rm = TRUE) - sd(lm_object.orig$model[,1], na.rm = TRUE)
-  crit.max <- mean(lm_object.orig$model[,1], na.rm = TRUE) + sd(lm_object.orig$model[,1], na.rm = TRUE)
+  crit.min <- min(lm_object.orig$model[,1], na.rm = TRUE)
+  crit.max <- max(lm_object.orig$model[,1], na.rm = TRUE)
 
   plot.table$moderator <- fct_relevel(plot.table$moderator,
                                       levels(plot.table$moderator)[plot.table$moderator[3]],
                                       levels(plot.table$moderator)[plot.table$moderator[2]],
                                       levels(plot.table$moderator)[plot.table$moderator[1]])
 
-  graph2D <- ggplot(plot.table, aes(x=predictor,
+  graph2D.unformatted <- ggplot(plot.table, aes(x=predictor,
                                     y = criterion,
                                     group = as.factor(moderator),
                                     linetype = as.factor(moderator))) +
-    geom_line(size = 1) +
+    geom_line(size = 1)
+  graph2D <- graph2D.unformatted +
     coord_cartesian(ylim = c(crit.min, crit.max)) +
     scale_x_continuous(breaks = round(seq(predictor.value.minusSD, predictor.value.plusSD, by = predictor.value.plusSD),2)) +
     theme_classic(14) +
@@ -198,7 +199,42 @@ fast.int <- function(data, criterion, predictor, moderator, center.predictors = 
                  Overall_R2_F = Overall_R2_F,
                  simple.slope.table = simple.slope.table.out,
                  graph2D = graph2D,
+                 graph2D.unformatted = graph2D.unformatted,
                  graph3D = graph3D)
+
+
+  #Create RTF code
+  # make_file_flag = TRUE
+  # if (make_file_flag==TRUE) {
+  #   table_title <- sprintf("Regression results using %s as the criterion\n",criterion.name)
+  #   table_note <-  apaTables:::get_reg_table_note_rtf(FALSE, FALSE) # no cor, no bets
+  #
+  #   #set columns widths and names
+  #   colwidths <- apaTables:::get_rtf_column_widths(apa.out$table_body)
+  #
+  #   regression_table <- as.matrix(block_out_rtf)
+  # #
+  # #
+  # #   #Create RTF code
+  #   rtfTable <- apaTables:::RtfTable$new(isHeaderRow=TRUE, defaultDecimalTableProportionInternal=.15)
+  #   rtfTable$setTableContent(apa.out$table_body)
+  #   rtfTable$setCellWidthsInches(colwidths)
+  #   rtfTable$setRowSecondColumnDecimalTab(.4)
+  #   txt_body <- rtfTable$getTableAsRTF(FALSE,FALSE)
+  #
+  #   print(txt_body)
+  # #
+  # #   if (is_multiple_blocks==TRUE) {
+  # #     write.rtf.table(filename = filename,txt.body = txt_body,table.title = table_title, table.note = table_note,landscape=TRUE,table.number=table_number)
+  # #   } else {
+  # #     write.rtf.table(filename = filename,txt.body = txt_body,table.title = table_title, table.note = table_note,table.number=table_number,landscape=TRUE)
+  # #   }
+  # #
+  # }
+
+
+
+
 
 
   class(output) <- "fastintoutput"

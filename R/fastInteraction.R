@@ -21,11 +21,11 @@
 #'Author: \tab David J. Stanley \email{dstanley@@uoguelph.ca}\cr
 #'Maintainer: \tab David J. Stanley \email{dstanley@@uoguelph.ca}
 #'}
-#'@importFrom "stats" "sd" "predict" "as.formula" "lm" "pf"
+#'@importFrom "stats" "sd" "predict" "as.formula" "lm" "pf" "pt" "qt" "vcov"
 #'@importFrom "plotly" "add_surface" "add_trace" "layout" "plot_ly"
 #'@importFrom "ggplot2" "coord_cartesian" "scale_x_continuous" "labs" "theme_classic" "ggplot" "aes" "geom_line"
 #'@importFrom "dplyr" "select"
 #'@importFrom "tidyr" "gather"
 #'@importFrom "forcats" "fct_relevel"
-utils::globalVariables(c("zv", "xv", "mv", "modvalue"))
+utils::globalVariables(c("zv", "xv", "mv", "modvalue", "SE_B", "b1.LL", "b1.UL", "b1.slope", "block_out_rtf", "p", "pred.hi","pred.lo"))
 NULL
