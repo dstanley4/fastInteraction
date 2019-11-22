@@ -61,3 +61,20 @@ is.valid.name <- function(sub.name, data.col.names) {
   }
   return(is.name.valid)
 }
+
+
+
+#' @export
+print.fastintoutput <- function(x,...) {
+  cat("\n\n")
+  output <- x
+  print(output$apa.table,row.names=FALSE,quote=FALSE)
+  cat(sprintf("Regression overall R2: %s", output$Overall_R2_F))
+  cat("\n")
+  print(output$graph2D)
+  print(output$graph3D)
+  cat("\n")
+  cat("3D graph - see Viewer panel in RStudio\n")
+  cat("2D graph - see Plots panel in RStudio\n")
+  cat("\n")
+}

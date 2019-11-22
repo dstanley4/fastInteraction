@@ -201,6 +201,7 @@ fast.int <- function(data, criterion, predictor, moderator, center.predictors = 
                  graph3D = graph3D)
 
 
+  class(output) <- "fastintoutput"
 
  return(output)
 }
