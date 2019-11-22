@@ -28,10 +28,12 @@ Creates a MMR plot and output
 }
 \examples{
 
-fast.int(data = grades,
-         criterion = exam,
-         predictor = preparation,
-         moderator = anxiety,
+# Compare results to Table 7.4.1 from Cohen, Cohen, West, and Aiken (2003)
+
+fast.int(data = cohen_exercise,
+         criterion = endurance,
+         predictor = age,
+         moderator = exercise,
          center.predictors = TRUE)
 
 }

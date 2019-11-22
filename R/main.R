@@ -8,10 +8,12 @@
 #' @param center.predictors test
 #' @examples
 #'
-#' fast.int(data = grades,
-#'          criterion = exam,
-#'          predictor = preparation,
-#'          moderator = anxiety,
+#' # Compare results to Table 7.4.1 from Cohen, Cohen, West, and Aiken (2003)
+#'
+#' fast.int(data = cohen_exercise,
+#'          criterion = endurance,
+#'          predictor = age,
+#'          moderator = exercise,
 #'          center.predictors = TRUE)
 #'
 #' @return plotly object
@@ -175,7 +177,7 @@ fast.int <- function(data, criterion, predictor, moderator, center.predictors = 
   df2 = reg.sum.table$fstatistic[3]
   pfvalue <- pf(fvalue, df1, df2, lower.tail = FALSE)
 
-  Overall_R2_F <- sprintf("R2 = %1.2f, F(%g, %g) = %1.2f, p = %1.3f",
+  Overall_R2_F <- sprintf("R2 = %1.3f, F(%g, %g) = %1.2f, p = %1.3f",
                     R2,
                     df1,
                     df2,
