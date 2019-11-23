@@ -2,29 +2,29 @@
 % Please edit documentation in R/main.R
 \name{fast.int}
 \alias{fast.int}
-\title{Creates a MMR plot and output}
+\title{Creates regression output for overall moderation and simple slopes analysis (2D/3D plots)}
 \usage{
 fast.int(data, criterion, predictor, moderator,
   center.predictors = FALSE, axis.labels = NULL)
 }
 \arguments{
-\item{data}{Name of data frame for interaction}
+\item{data}{Name of data frame}
 
-\item{criterion}{Name of independent variable 2 column in data frame}
+\item{criterion}{Name of criterion variable}
 
-\item{predictor}{Name of dependent variable column in data frame}
+\item{predictor}{Name of predictor variable}
 
-\item{moderator}{Project data frame name}
+\item{moderator}{Name of predictor variable}
 
-\item{center.predictors}{test}
+\item{center.predictors}{Boolean. Indicate if predictors hsould be centered. Default is FALSE.}
 
-\item{axis.labels}{test}
+\item{axis.labels}{Optional. Override column names as axis labels by sending in a list of new names.}
 }
 \value{
-plotly object
+Returns a list with many objects (tables/graphs) that are displayed on screen when printed.
 }
 \description{
-Creates a MMR plot and output
+Creates regression output for overall moderation and simple slopes analysis (2D/3D plots)
 }
 \examples{
 
@@ -35,5 +35,17 @@ fast.int(data = cohen_exercise,
          predictor = age,
          moderator = exercise,
          center.predictors = TRUE)
+# or
+
+new_axis_labels <- list(criterion = "Endurance",
+                        predictor = "Age",
+                        moderator = "Exercise")
+
+fast.int(data = cohen_exercise,
+         criterion = endurance,
+         predictor = age,
+         moderator = exercise,
+         center.predictors = TRUE,
+         axis.labels = new_axis_labels)
 
 }

@@ -1,11 +1,11 @@
 
-#' Creates a MMR plot and output
-#' @param data Name of data frame for interaction
-#' @param criterion Name of independent variable 2 column in data frame
-#' @param predictor Name of dependent variable column in data frame
-#' @param moderator Project data frame name
-#' @param axis.labels test
-#' @param center.predictors test
+#' Creates regression output for overall moderation and simple slopes analysis (2D/3D plots)
+#' @param data Name of data frame
+#' @param criterion Name of criterion variable
+#' @param predictor Name of predictor variable
+#' @param moderator Name of predictor variable
+#' @param axis.labels Optional. Override column names as axis labels by sending in a list of new names.
+#' @param center.predictors Boolean. Indicate if predictors hsould be centered. Default is FALSE.
 #' @examples
 #'
 #' # Compare results to Table 7.4.1 from Cohen, Cohen, West, and Aiken (2003)
@@ -15,8 +15,21 @@
 #'          predictor = age,
 #'          moderator = exercise,
 #'          center.predictors = TRUE)
+#' # or
 #'
-#' @return plotly object
+#' new_axis_labels <- list(criterion = "Endurance",
+#'                         predictor = "Age",
+#'                         moderator = "Exercise")
+#'
+#' fast.int(data = cohen_exercise,
+#'          criterion = endurance,
+#'          predictor = age,
+#'          moderator = exercise,
+#'          center.predictors = TRUE,
+#'          axis.labels = new_axis_labels)
+#'
+#' @return
+#' Returns a list with many objects (tables/graphs) that are displayed on screen when printed.
 #' @export
 fast.int <- function(data, criterion, predictor, moderator, center.predictors = FALSE, axis.labels = NULL) {
 
@@ -48,6 +61,15 @@ fast.int <- function(data, criterion, predictor, moderator, center.predictors = 
   moderator <- data[,moderator.name]
   criterion <- data[,criterion.name]
 
+  if (!is.null(axis.labels)) {
+    predictor.axis.label <- axis.labels$predictor
+    moderator.axis.label <- axis.labels$moderator
+    criterion.axis.label <- axis.labels$criterion
+  } else {
+    predictor.axis.label <- predictor.name
+    moderator.axis.label <- moderator.name
+    criterion.axis.label <- criterion.name
+  }
 
   formula.orig <- get.formula.orig.vars(criterion.name, predictor.name, moderator.name)
   lm_object.orig <- lm(formula = formula.orig, data = data, na.action="na.exclude")
@@ -136,16 +158,17 @@ fast.int <- function(data, criterion, predictor, moderator, center.predictors = 
                                     group = as.factor(moderator),
                                     linetype = as.factor(moderator))) +
     geom_line(size = 1)
+
   graph2D <- graph2D.unformatted +
     coord_cartesian(ylim = c(crit.min, crit.max)) +
     scale_x_continuous(breaks = round(seq(predictor.value.minusSD, predictor.value.plusSD, by = predictor.value.plusSD),2)) +
     theme_classic(14) +
-    labs(x = predictor.name, linetype = moderator.name, y = criterion.name)
+    labs(x = predictor.axis.label, linetype = moderator.axis.label, y = criterion.axis.label)
 
 
-  axis.labels <- list(criterion = criterion.name,
-                     predictor = predictor.name,
-                     moderator = moderator.name)
+  axis.labels <- list(criterion = criterion.axis.label,
+                      predictor = predictor.axis.label,
+                      moderator = moderator.axis.label)
 
   graph3D <- fast.plot(lm_object = lm_object,
                             criterion = zv,
