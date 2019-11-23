@@ -38,8 +38,8 @@ fast.int(data = cohen_exercise,
 # or
 
 new_axis_labels <- list(criterion = "Endurance",
-                        predictor = "Age",
-                        moderator = "Exercise")
+                        predictor = "Age (centered)",
+                        moderator = "Exercise (centered)")
 
 fast.int(data = cohen_exercise,
          criterion = endurance,
