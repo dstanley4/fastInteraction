@@ -114,15 +114,15 @@ fast.int <- function(data, criterion, predictor, moderator, center.predictors = 
   COV13 <- covmatrix[1,3]
   COV23 <- covmatrix[2,3]
   Z <- simple.slope.table$moderator.value
-  simple.slope.table$SE_B <- sqrt(SE2B11 + 2*Z*COV13 + (Z^2) * SE2B33)
-  simple.slope.table$t <- (b.predictor + b.interaction*Z) / simple.slope.table$SE_B
+  simple.slope.table$b1.SE <- sqrt(SE2B11 + 2*Z*COV13 + (Z^2) * SE2B33)
+  simple.slope.table$t <- (b.predictor + b.interaction*Z) / simple.slope.table$b1.SE
   N <- dim(lm_object.orig$model)[1]
   df <- N - 3 -1
   simple.slope.table$p <- 1-pt(q = abs(simple.slope.table$t), df = df)
   simple.slope.table$p <- round(simple.slope.table$p *2, 4)
 
   # Calculate CI for simple slopes
-  me <- qt(.975, df = df) * simple.slope.table$SE_B
+  me <- qt(.975, df = df) * simple.slope.table$b1.SE
   simple.slope.table$b1.LL <- simple.slope.table$b1.slope - me
   simple.slope.table$b1.UL <- simple.slope.table$b1.slope + me
 
@@ -217,7 +217,7 @@ fast.int <- function(data, criterion, predictor, moderator, center.predictors = 
                                           b1.LL,
                                           b1.UL,
                                           b0.intercept,
-                                          SE_B,
+                                          b1.SE,
                                           t,
                                           p)
   output <- list(apa.table = apa.out,
