@@ -5,6 +5,7 @@
 #' @param moderator Project data frame name
 #' @param center.predictors test
 #' @param axis.labels test
+#' @param cam.position A list with theta (degrees), phi (degrees), and distance values. Suggest default distance of 3.
 #' @return plotly object
 #' @examples
 #' head(grades)
@@ -34,9 +35,9 @@ fast.plot <- function(lm_object, criterion, predictor, moderator, center.predict
   # to special apaTables table?
 
   if (!is.null(cam.position)) {
-    cam.theta <- cam.position$cam.theta
-    cam.phi <- cam.position$cam.phi
-    cam.distance <- cam.position$cam.distance
+    cam.theta    <- cam.position$theta
+    cam.phi      <- cam.position$phi
+    cam.distance <- cam.position$distance
 
     cam.theta.rad <- degrees.to.radians(cam.theta)
     cam.phi.rad <- degrees.to.radians(cam.phi)
@@ -185,17 +186,3 @@ degrees.to.radians<-function(degrees)
   radians<-degrees*pi/180
   return(radians)
 }
-
-# layout(scene=list(xaxis = x.list,
-#                   yaxis = y.list,
-#                   zaxis = z.list,
-#                   camera = list(eye = list(x = cos(i)*cam.zoom,y = sin(i)*cam.zoom, z=0.2),
-#                                 center = list(x = 0,
-#                                               y = 0,
-#                                               z = 0
-#                                 )
-#                   )
-# )
-# )
-#
-#
