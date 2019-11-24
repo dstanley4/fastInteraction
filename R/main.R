@@ -41,8 +41,8 @@ fast.int <- function(data, criterion, predictor, moderator, center.predictors = 
   moderator.sub <- substitute(moderator)
   criterion.sub <- substitute(criterion)
 
-  is.predictor <- is.valid.name(predictor.sub,data.col.names)
-  is.moderator <- is.valid.name(moderator.sub,data.col.names)
+  is.predictor  <- is.valid.name(predictor.sub, data.col.names)
+  is.moderator  <- is.valid.name(moderator.sub, data.col.names)
   is.criterion  <- is.valid.name(criterion.sub, data.col.names)
   if (is.criterion==FALSE) {
     message("A valid dependent variable (criterion) must be specified.\n\n")
@@ -189,6 +189,10 @@ fast.int <- function(data, criterion, predictor, moderator, center.predictors = 
   apa.p <- apa.out.tablebody[,7]
   apa.fit <- apa.out.tablebody[,6]
   apa.out.tablebody <- cbind(apa.temp, p = apa.p, Fit = apa.fit)
+  apa.col.names <- names(apa.out.tablebody)
+  apa.col.names[3] <- "b_95_CI"
+  apa.col.names[5] <- "sr2_95_CI"
+  names(apa.out.tablebody) <- apa.col.names
   apa.out$table_body <- apa.out.tablebody
   #print(apa.out)
 
@@ -229,38 +233,37 @@ fast.int <- function(data, criterion, predictor, moderator, center.predictors = 
 
 
   #Create RTF code
-  # make_file_flag = TRUE
-  # if (make_file_flag==TRUE) {
-  #   table_title <- sprintf("Regression results using %s as the criterion\n",criterion.name)
-  #   table_note <-  apaTables:::get_reg_table_note_rtf(FALSE, FALSE) # no cor, no bets
+  make_file_flag = TRUE
+  if (make_file_flag==TRUE) {
+    table_title <- sprintf("Regression results using %s as the criterion\n",criterion.name)
+    table_note <-  apaTables:::get_reg_table_note_rtf(FALSE, FALSE) # no cor, no bets
+
+    #set columns widths and names
+    colwidths <- get_rtf_column_widths_overall_lm(apa.out$table_body)
+
+
+    regression_table <- apa.out.tablebody
+    names(regression_table) <- get_rtf_column_names_overall_lm(regression_table)
+
   #
-  #   #set columns widths and names
-  #   colwidths <- apaTables:::get_rtf_column_widths(apa.out$table_body)
-  #
-  #   regression_table <- as.matrix(block_out_rtf)
-  # #
-  # #
-  # #   #Create RTF code
-  #   rtfTable <- apaTables:::RtfTable$new(isHeaderRow=TRUE, defaultDecimalTableProportionInternal=.15)
-  #   rtfTable$setTableContent(apa.out$table_body)
-  #   rtfTable$setCellWidthsInches(colwidths)
-  #   rtfTable$setRowSecondColumnDecimalTab(.4)
-  #   txt_body <- rtfTable$getTableAsRTF(FALSE,FALSE)
-  #
-  #   print(txt_body)
-  # #
-  # #   if (is_multiple_blocks==TRUE) {
-  # #     write.rtf.table(filename = filename,txt.body = txt_body,table.title = table_title, table.note = table_note,landscape=TRUE,table.number=table_number)
-  # #   } else {
-  # #     write.rtf.table(filename = filename,txt.body = txt_body,table.title = table_title, table.note = table_note,table.number=table_number,landscape=TRUE)
-  # #   }
-  # #
-  # }
+  #   #Create RTF code
+    rtfTable <- apaTables:::RtfTable$new(isHeaderRow=TRUE, defaultDecimalTableProportionInternal=.15)
+    rtfTable$setTableContent(as.matrix(regression_table))
+    rtfTable$setCellWidthsInches(colwidths)
+    rtfTable$setRowSecondColumnDecimalTab(.4)
+    txt_body <- rtfTable$getTableAsRTF(FALSE,FALSE)
 
+    #print(txt_body)
+    table_note <- "A significant {\\i b\\sub 1 \\nosupersub}-weight indicates the semi-partial correlation is also significant. {\\i b\\sub 1\\nosupersub} represents unstandardized regression weights. {\\i sr\\super 2\\nosupersub} represents the semi-partial correlation squared. LL and UL indicate the lower and upper limits of a confidence interval, respectively. {\\i p} indicates the {\\i p}-value. \\par * {\\i p} indicates {\\i p} < .05. ** indicates {\\i p} < .01."
 
+   # apaTables:::write.rtf.table(filename = "testfile.doc",
+   #                 txt.body = txt_body,
+   #                 table.title = table_title,
+   #                 table.note = table_note,
+   #                 table.number = 1,
+   #                 landscape=TRUE)
 
-
-
+  }
 
   class(output) <- "fastintoutput"
 

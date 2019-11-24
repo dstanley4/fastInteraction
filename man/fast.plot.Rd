@@ -19,6 +19,8 @@ fast.plot(lm_object, criterion, predictor, moderator,
 \item{center.predictors}{test}
 
 \item{axis.labels}{test}
+
+\item{cam.position}{A list with theta (degrees), phi (degrees), and distance values. Suggest default distance of 3.}
 }
 \value{
 plotly object
