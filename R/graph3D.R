@@ -25,7 +25,7 @@
 #'          center.predictors = TRUE)
 #'
 #' @export
-fast.plot <- function(lm_object, criterion, predictor, moderator, center.predictors = FALSE, axis.labels = NULL) {
+fast.plot <- function(lm_object, criterion, predictor, moderator, center.predictors = FALSE, axis.labels = NULL, cam.position = NULL) {
 
   # add ability to
   # change color of markerss?
@@ -33,7 +33,19 @@ fast.plot <- function(lm_object, criterion, predictor, moderator, center.predict
   # sim slope output
   # to special apaTables table?
 
+  if (!is.null(cam.position)) {
+    cam.theta <- cam.position$cam.theta
+    cam.phi <- cam.position$cam.phi
+    cam.distance <- cam.position$cam.distance
 
+    cam.theta.rad <- degrees.to.radians(cam.theta)
+    cam.phi.rad <- degrees.to.radians(cam.phi)
+    cam.positon.xyz <- pracma::sph2cart(c(cam.theta.rad, cam.phi.rad, cam.distance))
+
+    x.cam <- cam.positon.xyz[1]
+    y.cam <- cam.positon.xyz[2]
+    z.cam <- cam.positon.xyz[3]
+  }
 
   if (center.predictors == TRUE) {
     lm_object <- jtools::summ(lm_object, center = TRUE)$model
@@ -126,6 +138,8 @@ fast.plot <- function(lm_object, criterion, predictor, moderator, center.predict
                              line = list(color = "black", width = 10, dash = 'dash'),
                              name = "+1 SD line")
 
+  if (!is.null(cam.position)) {
+
   surface.graph <- layout(surface.graph,
                           scene = list(xaxis = list(title = predictor.axis.name,
                                                     range = c(min(x.seq), max(x.seq)),
@@ -136,12 +150,52 @@ fast.plot <- function(lm_object, criterion, predictor, moderator, center.predict
                                                     ticktype = "array",
                                                     tickvals = m.seq),
                                        zaxis = list(title = criterion.axis.name),
-                                       camera = list(eye = list(x = 2, y = -2, z = 1.25), zoom = 5),
+                                       camera = list(eye = list(x = x.cam, y = y.cam, z = z.cam),
+                                                     center = list(x = 0,
+                                                                   y = 0,
+                                                                   z = 0)),
                                        aspectmode = "cube",
                                        aspectratio = list(x = 1, y = 1, z = 0.95),
                                        showlegend = TRUE))
+  } else {
+
+    surface.graph <- layout(surface.graph,
+                            scene = list(xaxis = list(title = predictor.axis.name,
+                                                      range = c(min(x.seq), max(x.seq)),
+                                                      ticktype = "array",
+                                                      tickvals = x.seq),
+                                         yaxis = list(title = moderator.axis.name,
+                                                      range = c(min(m.seq), max(m.seq)),
+                                                      ticktype = "array",
+                                                      tickvals = m.seq),
+                                         zaxis = list(title = criterion.axis.name),
+                                         aspectmode = "cube",
+                                         aspectratio = list(x = 1, y = 1, z = 0.95),
+                                         showlegend = TRUE))
+
+  }
 
   return(surface.graph)
 
 }
 
+
+degrees.to.radians<-function(degrees)
+{
+  radians<-degrees*pi/180
+  return(radians)
+}
+
+# layout(scene=list(xaxis = x.list,
+#                   yaxis = y.list,
+#                   zaxis = z.list,
+#                   camera = list(eye = list(x = cos(i)*cam.zoom,y = sin(i)*cam.zoom, z=0.2),
+#                                 center = list(x = 0,
+#                                               y = 0,
+#                                               z = 0
+#                                 )
+#                   )
+# )
+# )
+#
+#

@@ -14,7 +14,8 @@ Imports:
     apaTables,
     ggplot2,
     tidyr,
-    forcats
+    forcats,
+    pracma
 License: MIT License + file LICENSE
 Date: 2019-11-08
 RoxygenNote: 6.1.1

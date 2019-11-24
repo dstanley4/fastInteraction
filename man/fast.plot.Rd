@@ -5,7 +5,7 @@
 \title{Creates a MMR plot}
 \usage{
 fast.plot(lm_object, criterion, predictor, moderator,
-  center.predictors = FALSE, axis.labels = NULL)
+  center.predictors = FALSE, axis.labels = NULL, cam.position = NULL)
 }
 \arguments{
 \item{lm_object}{Name of independent variable 1 column in data frame}
