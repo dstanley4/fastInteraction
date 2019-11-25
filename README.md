@@ -107,7 +107,8 @@ custom.formatted.ggplot.graph <- unformatted.ggplot.graph +
 # ggsave("my_custom_2D_graph.pdf", custom.formatted.ggplot.graph)
 ```
 
-![2D graph](graph2D.gif)
+![2D
+graph](https://github.com/dstanley4/fastInteraction/blob/master/vignettes/graph2D.gif)
 
 ### 3D Graphing with myoutput object (created above)
 
