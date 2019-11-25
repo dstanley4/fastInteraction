@@ -107,6 +107,8 @@ custom.formatted.ggplot.graph <- unformatted.ggplot.graph +
 # ggsave("my_custom_2D_graph.pdf", custom.formatted.ggplot.graph)
 ```
 
+![2D graph](graph2D.gif)
+
 ### 3D Graphing with myoutput object (created above)
 
 Saving the 3D graph is a bit tricky. The easiest way is to adjust the
@@ -123,15 +125,15 @@ here](https://github.com/plotly/orca). I suggest using Method 4 Stand
 alone binaries because it is a bit easier.
 
 A complication with saving the 3D graph via orca is that you need to set
-the orientationn of the graph in the code you use to create the graph. I
-suggest using fast.int command several times, each time varing the
+the orientation of the graph in the code you use to create the graph. I
+suggest using the fast.int command several times, each time varing the
 camera positions (cam.position), to obtain the desired graph
 orientation. Once the desired orientation is obtained, the graph can be
-saved with the orca command. You specify the camera position using theta
-(horizontal rotation angle in degrees 0 to 180, most likely), phi
-(vertical rotation angle in degrees 0 to 90, most likely), and distance
-(from the origin of the graph, start with 3 or 4 and increase this value
-if needed).
+saved with the orca command. You specify the camera position via
+cam.position using theta (horizontal rotation angle in degrees -180 to
+180, most likely), phi (vertical rotation angle in degrees -90 to 90,
+most likely), and distance (from the origin of the graph, start with 3
+or 4 and increase this value if needed).
 
 ``` r
 library(fastInteraction)
@@ -140,9 +142,9 @@ new_axis_labels <- list(criterion = "Endurance",
                         predictor = "Age (centered)",
                         moderator = "Exercise (centered)")
 
-cam_position <- list(theta = 45,
+cam_position <- list(theta = -20,
                      phi = 20,
-                     distance = 3)
+                     distance = 2.5)
 
 myoutput <- fast.int(data = cohen_exercise,
                criterion = endurance,
@@ -161,6 +163,8 @@ library(plotly)
 # This lines saves 1000 pixel by 1000 pixel version of the graph in PNG format
 orca(graph3D, file = "plot.png", width = 1000, height = 1000)
 ```
+
+![3D graph](graph3D.gif)
 
 ### Analysis information with myoutput object (created above)
 
