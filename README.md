@@ -87,15 +87,19 @@ Graphing with myoutput object (created above)
 
 ``` r
 # Obtain the ggplot graph presented in the Plots tab
-formated.ggplot.graph <- myoutput$graph2D.formatted
+formatted.ggplot.graph <- myoutput$graph2D.formatted
+# ggsave("my_2D_graph.pdf", formatted.ggplot.graph)
+
 
 # Obtain the ggplot graph presented prior to the formatting commands being applied
 # If yout want to modify this graph simply add your own ggplot command as illustrated below: 
-unformated.ggplot.graph <- myoutput$graph2D.unformatted
+unformatted.ggplot.graph <- myoutput$graph2D.unformatted
 
-custom.formated.ggplot.graph <- unformated.ggplot.graph +
+custom.formatted.ggplot.graph <- unformatted.ggplot.graph +
                                    coord_cartesian(ylim = c(0, 60)) +
                                    theme_grey(18)
+
+# ggsave("my_custom_2D_graph.pdf", custom.formatted.ggplot.graph)
 ```
 
 ### Analysis information with myoutput object (created above)
