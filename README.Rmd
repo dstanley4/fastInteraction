@@ -10,8 +10,9 @@ Moderated mulitple regression is a common analysis in psychology. Unfortunately,
 
 This package conducts the required analyses and creates both 2D and 3D graphs of the moderated regression using ggplot and plot.ly, respectively. Additionally, regression results of the analyses are displayed in the console, output in list format, and embeded in APA style tables (as per [apaTables](https://cran.r-project.org/web/packages/apaTables/vignettes/apaTables.html)) if a filename (ending in .doc or .rtf) is specified.
 
-The development version of fastInteraction hosted here on Github. Eventually, version will be posted to the CRAN.
+The development version of fastInteraction hosted here on Github. Eventually, a version will be posted to the CRAN.
 
+Currently only interactions between two continous variables is supported.
 
 ### Install Development Version
 
@@ -100,7 +101,7 @@ Saving the 3D graph is a bit tricky. The easiest way is to adjust the graph unti
 
 A beter, but more complicated approach for obtaining a graph for publication is to install orca [install link here](https://github.com/plotly/orca). I suggest using Method 4 Stand alone binaries since it is a bit easier. 
 
-A complication with saving the 3D graph is that you need to set the orientationn of the graph in the code you use to create the graph. I suggest using fast.int command several times specifying the different coordinate systems to obtain the desired orientation prior to 
+A complication with saving the 3D graph is that you need to set the orientationn of the graph in the code you use to create the graph. I suggest using fast.int command several times, each time varing the camera positions (cam.position), to obtain the desired graph orientation. Once the desired orientation is obtained, the graph can be saved with the orca command. You specify the camera position using theta (horizontal rotation angle in degrees 0 to 180, most likely), phi (vertical rotation angle in degrees 0 to 90, most likely), and distance (from the origin of the graph, start with 3 or 4 and increase this value if needed). 
 
 ```{r, eval=FALSE}
 library(fastInteraction)

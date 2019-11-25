@@ -15,7 +15,10 @@ style tables (as per
 if a filename (ending in .doc or .rtf) is specified.
 
 The development version of fastInteraction hosted here on Github.
-Eventually, version will be posted to the CRAN.
+Eventually, a version will be posted to the CRAN.
+
+Currently only interactions between two continous variables is
+supported.
 
 ### Install Development Version
 
@@ -120,8 +123,14 @@ alone binaries since it is a bit easier.
 
 A complication with saving the 3D graph is that you need to set the
 orientationn of the graph in the code you use to create the graph. I
-suggest using fast.int command several times specifying the different
-coordinate systems to obtain the desired orientation prior to
+suggest using fast.int command several times, each time varing the
+camera positions (cam.position), to obtain the desired graph
+orientation. Once the desired orientation is obtained, the graph can be
+saved with the orca command. You specify the camera position using theta
+(horizontal rotation angle in degrees 0 to 180, most likely), phi
+(vertical rotation angle in degrees 0 to 90, most likely), and distance
+(from the origin of the graph, start with 3 or 4 and increase this value
+if needed).
 
 ``` r
 library(fastInteraction)
