@@ -164,7 +164,7 @@ library(plotly)
 orca(graph3D, file = "plot.png", width = 1000, height = 1000)
 ```
 
-![3D graph](graph3D.gif)
+![3D graph](https://github/dstanley4/vignettes/graph3D.gif)
 
 ### Analysis information with myoutput object (created above)
 
