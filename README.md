@@ -140,12 +140,18 @@ summary(regression.lm.object)
     ## Multiple R-squared:  0.2061, Adjusted R-squared:  0.1962 
     ## F-statistic: 20.86 on 3 and 241 DF,  p-value: 4.764e-12
 
-### Obtain the exact data included in the regression (after drops due to missing data):
+### Obtain the exact data included in the regression - after centering and drops due to missing data:
 
 ``` r
-data_analyzed <- summary(regression.lm.object)$model
+data_analyzed <- regression.lm.object$model
 
 head(data_analyzed)
 ```
 
-    ## NULL
+    ##   endurance        age   exercise
+    ## 1        18  10.816326 -0.6734698
+    ## 2        36  -9.183674 -1.6734698
+    ## 3        51 -20.183674 -8.6734698
+    ## 4        18  -2.183674 -0.6734698
+    ## 5        23  -1.183674 -1.6734698
+    ## 6        30  -7.183674 -4.6734698

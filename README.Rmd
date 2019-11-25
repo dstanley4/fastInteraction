@@ -102,10 +102,10 @@ summary(regression.lm.object)
 
 ```
 
-### Obtain the exact data included in the regression (after drops due to missing data):
+### Obtain the exact data included in the regression - after centering and drops due to missing data:
 
 ```{r}
-data_analyzed <- summary(regression.lm.object)$model
+data_analyzed <- regression.lm.object$model
 
 head(data_analyzed)
 ```
