@@ -29,7 +29,7 @@ library(fastInteraction)
 
 fastInteraction uses data (i.e., cohen_data) consistent with Table 7.4.1 from Cohen, Cohen, West, and Aiken (2003) as the demonstration data set so that values obtained in the output can be checked against those in the book.
 
-The code below creates both 2D and 3D graphs and display regression results to the console:
+The code below creates both 2D and 3D graphs and displays regression results to the console:
 
 ```{r, eval = FALSE}
 fast.int(data = cohen_exercise,
@@ -39,9 +39,11 @@ fast.int(data = cohen_exercise,
          center.predictors = TRUE)
 ```
 
-Slightly modified code creates both 2D and 3D graphs (with custom axis labels), display regression results to the console, and creates a Word document with the regression tables in APA style.
+Slightly modified code creates both 2D and 3D graphs (with custom axis labels), displays regression results to the console, and creates a Word document with the regression tables in APA style.
 
-```{r, eval=FALSE}
+```{r, eval=TRUE}
+library(fastInteraction)
+
 new_axis_labels <- list(criterion = "Endurance",
                         predictor = "Age (centered)",
                         moderator = "Exercise (centered)")
@@ -55,8 +57,47 @@ fast.int(data = cohen_exercise,
          filename = "tables.doc")
 ```
 
+You can also put the output into a custom object and remove key components:
 
 
+
+
+```{r, eval=TRUE}
+myoutput <- fast.int(data = cohen_exercise,
+               criterion = endurance,
+               predictor = age,
+               moderator = exercise,
+               center.predictors = TRUE,
+               axis.labels = new_axis_labels,
+               filename = "tables.doc")
+```
+
+Graphing with myoutput
+```{r, eval=FALSE}
+
+# Obtain the ggplot graph presented in the Plots tab
+formated.ggplot.graph <- myoutput$graph2D.formatted
+
+# Obtain the ggplot graph presented prior to the formatting commands being applied
+# If yout want to modify this graph simply add your own ggplot command as illustrated below: 
+unformated.ggplot.graph <- myoutput$graph2D.unformatted
+
+unformated.ggplot.graph <- unformated.ggplot.graph +
+                              coord_cartesian(ylim = c(0, 60)) +
+                              theme_grey(18)
+```
+
+Analysis information with myoutput
+```{r, eval=TRUE}
+
+# Obtain the regression object presented in tables
+regression.lm.object  <- myoutput$regression.lm.object
+
+print(regression.lm.object)
+
+summary(regression.lm.object)
+
+```
 
 
 
