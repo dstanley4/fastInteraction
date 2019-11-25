@@ -7,6 +7,7 @@
 #' @param axis.labels Optional. Override column names as axis labels by sending in a list of new names.
 #' @param center.predictors Boolean. Indicate if predictors hsould be centered. Default is FALSE.
 #' @param filename Optional. File name such as "myfile.doc" or "myfile.rtf" for APA style regression tables
+#' @param cam.position A list with theta (degrees), phi (degrees), and distance values. Suggest default distance of 3.
 #' @examples
 #'
 #' # Compare results to Table 7.4.1 from Cohen, Cohen, West, and Aiken (2003)
@@ -43,7 +44,7 @@
 #' @return
 #' Returns a list with many objects (tables/graphs) that are displayed on screen when printed.
 #' @export
-fast.int <- function(data, criterion, predictor, moderator, center.predictors = FALSE, axis.labels = NULL, filename = NULL) {
+fast.int <- function(data, criterion, predictor, moderator, center.predictors = FALSE, axis.labels = NULL, filename = NULL, cam.position = NULL) {
 
   make_file_flag = FALSE
   if (!is.null(filename)) {
@@ -193,7 +194,8 @@ fast.int <- function(data, criterion, predictor, moderator, center.predictors = 
                             predictor = xv,
                             moderator = mv,
                             center.predictors = FALSE,
-                            axis.labels = axis.labels)
+                            axis.labels = axis.labels,
+                            cam.position = cam.position)
 
   reg.sum.table <- summary(lm_object.orig)
   summary.p.values <- sprintf("%1.3f",reg.sum.table$coefficients[,"Pr(>|t|)"])
