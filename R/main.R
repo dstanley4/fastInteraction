@@ -242,8 +242,9 @@ fast.int <- function(data, criterion, predictor, moderator, center.predictors = 
                                           b1.SE,
                                           t,
                                           p)
-  output <- list(apa.table = apa.out,
-                 Overall_R2_F = Overall_R2_F,
+  output <- list(regression.lm.object  =lm_object.orig,
+                 apa.table = apa.out,
+                 Overall.R2.F = Overall_R2_F,
                  simple.slope.table = simple.slope.table.out,
                  graph2D = graph2D,
                  graph2D.unformatted = graph2D.unformatted,

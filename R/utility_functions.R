@@ -69,7 +69,7 @@ print.fastintoutput <- function(x,...) {
   cat("\n\n")
   output <- x
   print(output$apa.table,row.names=FALSE,quote=FALSE)
-  cat(sprintf("Regression overall R2: %s", output$Overall_R2_F))
+  cat(sprintf("Regression overall R2: %s", output$Overall.R2.F))
   cat("\n")
   cat("\n")
   cat("Simple slope table\n")
