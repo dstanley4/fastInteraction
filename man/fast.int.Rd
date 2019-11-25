@@ -5,7 +5,8 @@
 \title{Creates regression output for overall moderation and simple slopes analysis (2D/3D plots)}
 \usage{
 fast.int(data, criterion, predictor, moderator,
-  center.predictors = FALSE, axis.labels = NULL, filename = NULL)
+  center.predictors = FALSE, axis.labels = NULL, filename = NULL,
+  cam.position = NULL)
 }
 \arguments{
 \item{data}{Name of data frame}
@@ -21,6 +22,8 @@ fast.int(data, criterion, predictor, moderator,
 \item{axis.labels}{Optional. Override column names as axis labels by sending in a list of new names.}
 
 \item{filename}{Optional. File name such as "myfile.doc" or "myfile.rtf" for APA style regression tables}
+
+\item{cam.position}{A list with theta (degrees), phi (degrees), and distance values. Suggest default distance of 3.}
 }
 \value{
 Returns a list with many objects (tables/graphs) that are displayed on screen when printed.

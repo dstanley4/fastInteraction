@@ -56,7 +56,7 @@ fast.int(data = cohen_exercise,
          filename = "tables.doc")
 ```
 
-You can also put the output into a custom object and remove key components:
+You can also put the output into a custom object and access key components such different versions of the graphs, the regression object itself, even the exact data analyzed after centering and drops due to missing data.
 
 
 ```{r, eval=TRUE}
@@ -75,7 +75,7 @@ myoutput <- fast.int(data = cohen_exercise,
                filename = "tables.doc")
 ```
 
-Graphing with myoutput object (created above)
+### 2D Graphing with myoutput object (created above)
 ```{r, eval=FALSE}
 
 # Obtain the ggplot graph presented in the Plots tab
@@ -92,6 +92,44 @@ custom.formatted.ggplot.graph <- unformatted.ggplot.graph +
                                    theme_grey(18)
 
 # ggsave("my_custom_2D_graph.pdf", custom.formatted.ggplot.graph)
+
+```
+
+### 3D Graphing with myoutput object (created above)
+Saving the 3D graph is a bit tricky. The easiest way is to adjust the graph until it is in the orientation you like in the Viewer panel of RStudio and then use the buttons in the Viewer to save it. Note that with this approach, the larger the graph is on your screen the larger the dimensions of the final graph will be. Make it very large to obtain a version of the graph that is high enough for publication.
+
+A beter, but more complicated approach for obtaining a graph for publication is to install orca [install link here](https://github.com/plotly/orca). I suggest using Method 4 Stand alone binaries since it is a bit easier. 
+
+A complication with saving the 3D graph is that you need to set the orientationn of the graph in the code you use to create the graph. I suggest using fast.int command several times specifying the different coordinate systems to obtain the desired orientation prior to 
+
+```{r, eval=FALSE}
+library(fastInteraction)
+
+new_axis_labels <- list(criterion = "Endurance",
+                        predictor = "Age (centered)",
+                        moderator = "Exercise (centered)")
+
+cam_position <- list(theta = 45,
+                     phi = 20,
+                     distance = 3)
+
+myoutput <- fast.int(data = cohen_exercise,
+               criterion = endurance,
+               predictor = age,
+               moderator = exercise,
+               center.predictors = TRUE,
+               axis.labels = new_axis_labels,
+               cam.position = cam_position,
+               filename = "tables.doc")
+
+# The plot.ly object can be obtained with the code below:
+graph3D <- myoutput$graph3D
+
+library(plotly)
+# This next line requires you install orca software as per link above
+# This lines saves 1000 pixel by 1000 pixel version of the graph in PNG format
+orca(graph3D, file = "plot.png", width = 1000, height = 1000)
+
 ```
 
 ### Analysis information with myoutput object (created above)
