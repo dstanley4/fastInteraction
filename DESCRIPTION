@@ -15,10 +15,13 @@ Imports:
     ggplot2,
     tidyr,
     forcats,
-    pracma
+    pracma,
+    knitr
 License: MIT License + file LICENSE
 Date: 2019-11-08
 RoxygenNote: 6.1.1
 Depends:
     R (>= 3.1.2)
-
+VignetteBuilder: knitr
+Suggests: 
+    rmarkdown

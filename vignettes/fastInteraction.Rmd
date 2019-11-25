@@ -1,13 +1,22 @@
 ---
 title: "fastInteraction"
-author: "David J. Stanley, University of Guelph"
-date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{fastInteraction}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(fastInteraction)
+```
 
 Moderated mulitple regression is a common analysis in psychology. Unfortunately, there are a large number of steps associated with creating the desired output and code for both 2D and 3D graphs of the moderated regression. 
 
@@ -61,7 +70,6 @@ fast.int(data = cohen_exercise,
 ```
 
 ![Tables](tables_apa.gif)
-
 
 
 You can also put the output into a custom object and access key components such different versions of the graphs, the regression object itself, even the exact data analyzed after centering and drops due to missing data.
@@ -152,9 +160,7 @@ library(plotly)
 orca(graph3D, file = "graph3D.png", width = 1000, height = 1000)
 
 ```
-
 ![3D graph](graph3D.gif)
-
 
 ### Analysis information with myoutput object (created above)
 ```{r, eval=TRUE}
@@ -179,4 +185,3 @@ data_analyzed <- regression.lm.object$model
 
 head(data_analyzed)
 ```
-
