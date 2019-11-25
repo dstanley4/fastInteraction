@@ -4,15 +4,9 @@
 \name{fastInteraction}
 \alias{fastInteraction}
 \alias{fastInteraction-package}
-\title{Create 3D graphs}
+\title{Create regression output, 2D/3D surface plots, and APA tables for continuous variable regression interactions (moderated multiple regression)}
 \description{
-A common problem is creating 3D graphs for regression. This packages solves that problrem.
-}
-\details{
-Bugs and feature requests can be reported at: \url{https://github.com/dstanley4/fastInteraction/issues}
-
-A package overview can be obtained using the command: \code{vignette("fastInteraction")}
-
+Moderated mulitple regression is a common analysis in psychology. Unfortunately, there are a large number of steps associated with creating the desired output and code for both 2D and 3D graphs of the moderated regression. This package conducts the required analyses and creates both 2D and 3D graphs of the moderated regression using ggplot and plot.ly, respectively. Additionally, regression results of the analyses are displayed in the console, output in list format, and embeded in APA style tables#'
 \tabular{ll}{
 Package: \tab fastInteraction\cr
 Type: \tab Package\cr

@@ -6,6 +6,7 @@
 #' @param moderator Name of predictor variable
 #' @param axis.labels Optional. Override column names as axis labels by sending in a list of new names.
 #' @param center.predictors Boolean. Indicate if predictors hsould be centered. Default is FALSE.
+#' @param filename Optional. File name such as "myfile.doc" or "myfile.rtf" for APA style regression tables
 #' @examples
 #'
 #' # Compare results to Table 7.4.1 from Cohen, Cohen, West, and Aiken (2003)
@@ -15,8 +16,17 @@
 #'          predictor = age,
 #'          moderator = exercise,
 #'          center.predictors = TRUE)
-#' # or
 #'
+#'  # Save the ouput tables in APA style by adding a filename
+#'  fast.int(data = cohen_exercise,
+#'          criterion = endurance,
+#'          predictor = age,
+#'          moderator = exercise,
+#'          center.predictors = TRUE,
+#'          filename = "tables.doc")
+#'
+#'
+#' # Add custom graph labels
 #' new_axis_labels <- list(criterion = "Endurance",
 #'                         predictor = "Age (centered)",
 #'                         moderator = "Exercise (centered)")
@@ -26,12 +36,20 @@
 #'          predictor = age,
 #'          moderator = exercise,
 #'          center.predictors = TRUE,
-#'          axis.labels = new_axis_labels)
+#'          axis.labels = new_axis_labels,
+#'          filename = "tables.doc")
+#'
 #'
 #' @return
 #' Returns a list with many objects (tables/graphs) that are displayed on screen when printed.
 #' @export
-fast.int <- function(data, criterion, predictor, moderator, center.predictors = FALSE, axis.labels = NULL) {
+fast.int <- function(data, criterion, predictor, moderator, center.predictors = FALSE, axis.labels = NULL, filename = NULL) {
+
+  make_file_flag = FALSE
+  if (!is.null(filename)) {
+    make_file_flag = TRUE
+  }
+
 
   data = as.data.frame(data)
 
@@ -233,35 +251,57 @@ fast.int <- function(data, criterion, predictor, moderator, center.predictors = 
 
 
   #Create RTF code
-  make_file_flag = TRUE
   if (make_file_flag==TRUE) {
-    table_title <- sprintf("Regression results using %s as the criterion\n",criterion.name)
-    table_note <-  apaTables:::get_reg_table_note_rtf(FALSE, FALSE) # no cor, no bets
 
-    #set columns widths and names
+    # First table
+    table_title <- sprintf("Moderated regression results using %s as the criterion, %s as the predictor, and %s as the moderator\n",criterion.name, predictor.name, moderator.name)
     colwidths <- get_rtf_column_widths_overall_lm(apa.out$table_body)
-
-
     regression_table <- apa.out.tablebody
     names(regression_table) <- get_rtf_column_names_overall_lm(regression_table)
-
-  #
-  #   #Create RTF code
     rtfTable <- apaTables:::RtfTable$new(isHeaderRow=TRUE, defaultDecimalTableProportionInternal=.15)
     rtfTable$setTableContent(as.matrix(regression_table))
     rtfTable$setCellWidthsInches(colwidths)
     rtfTable$setRowSecondColumnDecimalTab(.4)
     txt_body <- rtfTable$getTableAsRTF(FALSE,FALSE)
+    table_note <- "A significant {\\i b}-weight indicates the semi-partial correlation is also significant. {\\i b} represents unstandardized regression weights. {\\i sr\\super 2\\nosupersub} represents the semi-partial correlation squared. LL and UL indicate the lower and upper limits of a confidence interval, respectively. {\\i p} indicates the {\\i p}-value. \\par * {\\i p} indicates {\\i p} < .05. ** indicates {\\i p} < .01."
 
-    #print(txt_body)
-    table_note <- "A significant {\\i b\\sub 1 \\nosupersub}-weight indicates the semi-partial correlation is also significant. {\\i b\\sub 1\\nosupersub} represents unstandardized regression weights. {\\i sr\\super 2\\nosupersub} represents the semi-partial correlation squared. LL and UL indicate the lower and upper limits of a confidence interval, respectively. {\\i p} indicates the {\\i p}-value. \\par * {\\i p} indicates {\\i p} < .05. ** indicates {\\i p} < .01."
 
-   # apaTables:::write.rtf.table(filename = "testfile.doc",
-   #                 txt.body = txt_body,
-   #                 table.title = table_title,
-   #                 table.note = table_note,
-   #                 table.number = 1,
-   #                 landscape=TRUE)
+
+    # Second table
+    simple.slope.table.rounded <- simple.slope.table.out
+    simple.slope.table.rounded[,2] <- round(simple.slope.table.rounded[,2], 3)
+    simple.slope.table.rounded[,3] <- round(simple.slope.table.rounded[,3], 3)
+    simple.slope.table.rounded[,4] <- round(simple.slope.table.rounded[,4], 3)
+    simple.slope.table.rounded[,5] <- round(simple.slope.table.rounded[,5], 3)
+    simple.slope.table.rounded[,6] <- round(simple.slope.table.rounded[,6], 3)
+    simple.slope.table.rounded[,7] <- round(simple.slope.table.rounded[,7], 3)
+    simple.slope.table.rounded[,8] <- round(simple.slope.table.rounded[,8], 3)
+
+
+    table_title2 <- sprintf("Simple slope regression results using %s as the criterion, %s as the predictor, and %s as the moderator\n",criterion.name, predictor.name, moderator.name)
+    colwidths <- get_rtf_column_widths_overall_lm(simple.slope.table.rounded)
+    regression_table <- simple.slope.table.rounded
+    names(regression_table) <- get_rtf_column_names_overall_lm(regression_table)
+    rtfTable <- apaTables:::RtfTable$new(isHeaderRow=TRUE, defaultDecimalTableProportionInternal=.15)
+    rtfTable$setTableContent(as.matrix(regression_table))
+    rtfTable$setCellWidthsInches(colwidths)
+    rtfTable$setRowSecondColumnDecimalTab(.4)
+    txt_body2 <- rtfTable$getTableAsRTF(FALSE,FALSE)
+    table_note2 <- "{\\i b\\sub 1\\nosupersub} represents the slope. {\\i b\\sub 0\\nosupersub} represents the intercept. SE represents standard error. LL and UL indicate the lower and upper limits of a confidence interval, respectively. {\\i t} represents the {\\i t}-obtained value. {\\i p} represents the {\\i p}-value. \\par * {\\i p} indicates {\\i p} < .05. ** indicates {\\i p} < .01."
+
+
+    # Is 3D export function installed...
+    # is.xxx.installed <- sum(installed.packages()[,1] == "apaTables")
+
+    write.rtf.table.fastint(filename = filename,
+                   txt.body = txt_body,
+                   table.title = table_title,
+                   table.note = table_note,
+                   table.number = 1,
+                   txt.body2 = txt_body2,
+                   table.title2 = table_title2,
+                   table.note2 = table_note2,
+                   landscape=TRUE)
 
   }
 

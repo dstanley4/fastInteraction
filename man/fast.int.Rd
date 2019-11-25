@@ -5,7 +5,7 @@
 \title{Creates regression output for overall moderation and simple slopes analysis (2D/3D plots)}
 \usage{
 fast.int(data, criterion, predictor, moderator,
-  center.predictors = FALSE, axis.labels = NULL)
+  center.predictors = FALSE, axis.labels = NULL, filename = NULL)
 }
 \arguments{
 \item{data}{Name of data frame}
@@ -19,6 +19,8 @@ fast.int(data, criterion, predictor, moderator,
 \item{center.predictors}{Boolean. Indicate if predictors hsould be centered. Default is FALSE.}
 
 \item{axis.labels}{Optional. Override column names as axis labels by sending in a list of new names.}
+
+\item{filename}{Optional. File name such as "myfile.doc" or "myfile.rtf" for APA style regression tables}
 }
 \value{
 Returns a list with many objects (tables/graphs) that are displayed on screen when printed.
@@ -35,8 +37,17 @@ fast.int(data = cohen_exercise,
          predictor = age,
          moderator = exercise,
          center.predictors = TRUE)
-# or
 
+ # Save the ouput tables in APA style by adding a filename
+ fast.int(data = cohen_exercise,
+         criterion = endurance,
+         predictor = age,
+         moderator = exercise,
+         center.predictors = TRUE,
+         filename = "tables.doc")
+
+
+# Add custom graph labels
 new_axis_labels <- list(criterion = "Endurance",
                         predictor = "Age (centered)",
                         moderator = "Exercise (centered)")
@@ -46,6 +57,8 @@ fast.int(data = cohen_exercise,
          predictor = age,
          moderator = exercise,
          center.predictors = TRUE,
-         axis.labels = new_axis_labels)
+         axis.labels = new_axis_labels,
+         filename = "tables.doc")
+
 
 }
