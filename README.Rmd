@@ -8,7 +8,7 @@ output:
 
 Moderated mulitple regression is a common analysis in psychology. Unfortunately, there are a large number of steps associated with creating the desired output and code for both 2D and 3D graphs of the moderated regression. 
 
-This package conducts the required analyses and creates both 2D and 3D graphs of the moderated regression using ggplot and plot.ly, respectively. Additionally, regression results of the analyses are displayed in the console, output in list format, and embeded in APA style tables (as per [apaTables](https://cran.r-project.org/web/packages/apaTables/vignettes/apaTables.html) if a filename (ending in .doc or .rtf) is specified.
+This package conducts the required analyses and creates both 2D and 3D graphs of the moderated regression using ggplot and plot.ly, respectively. Additionally, regression results of the analyses are displayed in the console, output in list format, and embeded in APA style tables (as per [apaTables](https://cran.r-project.org/web/packages/apaTables/vignettes/apaTables.html)) if a filename (ending in .doc or .rtf) is specified.
 
 The development version of fastInteraction hosted here on Github. Eventually, version will be posted to the CRAN.
 
