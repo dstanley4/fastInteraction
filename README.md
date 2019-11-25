@@ -83,7 +83,7 @@ myoutput <- fast.int(data = cohen_exercise,
                filename = "tables.doc")
 ```
 
-Graphing with myoutput
+Graphing with myoutput object (created above)
 
 ``` r
 # Obtain the ggplot graph presented in the Plots tab
@@ -98,7 +98,7 @@ custom.formated.ggplot.graph <- unformated.ggplot.graph +
                                    theme_grey(18)
 ```
 
-### Analysis information with myoutput
+### Analysis information with myoutput object (created above)
 
 ``` r
 # Obtain the regression object presented in tables
@@ -140,9 +140,13 @@ summary(regression.lm.object)
     ## Multiple R-squared:  0.2061, Adjusted R-squared:  0.1962 
     ## F-statistic: 20.86 on 3 and 241 DF,  p-value: 4.764e-12
 
-### Obtain the exact data included in the regression - after centering and drops due to missing data:
+### Obtain the exact data included in the regression - after centering and drops due to missing data with myoutput object (created above)
 
 ``` r
+# Obtain the regression object presented in tables
+
+regression.lm.object  <- myoutput$regression.lm.object
+
 data_analyzed <- regression.lm.object$model
 
 head(data_analyzed)
