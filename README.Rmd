@@ -76,14 +76,19 @@ myoutput <- fast.int(data = cohen_exercise,
                filename = "tables.doc")
 ```
 
-### 2D Graphing with myoutput object (created above)
+### 2D Graphing (as displayed) with myoutput object (created above)
 ```{r, eval=FALSE}
 
 # Obtain the ggplot graph presented in the Plots tab
 formatted.ggplot.graph <- myoutput$graph2D.formatted
-ggsave("my_2D_graph.pdf", formatted.ggplot.graph)
+ggsave("graph2D.gif", formatted.ggplot.graph)
+```
 
+![2D graph](https://github.com/dstanley4/fastInteraction/blob/master/vignettes/graph2D.gif)
 
+### 2D Graphing (custom) with myoutput object (created above)
+
+```{r, eval=FALSE}
 # Obtain the ggplot graph presented prior to the formatting commands being applied
 # If yout want to modify this graph simply add your own ggplot command as illustrated below: 
 unformatted.ggplot.graph <- myoutput$graph2D.unformatted
@@ -92,11 +97,10 @@ custom.formatted.ggplot.graph <- unformatted.ggplot.graph +
                                    coord_cartesian(ylim = c(0, 60)) +
                                    theme_grey(18)
 
-ggsave("my_custom_2D_graph.pdf", custom.formatted.ggplot.graph)
+ggsave("graph2Dcustom.gif", custom.formatted.ggplot.graph)
 
 ```
 
-![2D graph](https://github.com/dstanley4/fastInteraction/blob/master/vignettes/graph2D.gif)
 
 
 ### 3D Graphing with myoutput object (created above)
