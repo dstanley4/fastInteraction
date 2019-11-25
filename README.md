@@ -93,12 +93,12 @@ formated.ggplot.graph <- myoutput$graph2D.formatted
 # If yout want to modify this graph simply add your own ggplot command as illustrated below: 
 unformated.ggplot.graph <- myoutput$graph2D.unformatted
 
-unformated.ggplot.graph <- unformated.ggplot.graph +
-                              coord_cartesian(ylim = c(0, 60)) +
-                              theme_grey(18)
+custom.formated.ggplot.graph <- unformated.ggplot.graph +
+                                   coord_cartesian(ylim = c(0, 60)) +
+                                   theme_grey(18)
 ```
 
-Analysis information with myoutput
+### Analysis information with myoutput
 
 ``` r
 # Obtain the regression object presented in tables
@@ -139,3 +139,13 @@ summary(regression.lm.object)
     ## Residual standard error: 9.7 on 241 degrees of freedom
     ## Multiple R-squared:  0.2061, Adjusted R-squared:  0.1962 
     ## F-statistic: 20.86 on 3 and 241 DF,  p-value: 4.764e-12
+
+### Obtain the exact data included in the regression (after drops due to missing data):
+
+``` r
+data_analyzed <- summary(regression.lm.object)$model
+
+head(data_analyzed)
+```
+
+    ## NULL
