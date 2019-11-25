@@ -41,8 +41,7 @@ fast.int(data = cohen_exercise,
 
 Slightly modified code creates both 2D and 3D graphs (with custom axis labels), displays regression results to the console, and creates a Word document with the regression tables in APA style.
 
-```{r, eval=TRUE}
-library(fastInteraction)
+```{r, eval=FALSE}
 
 new_axis_labels <- list(criterion = "Endurance",
                         predictor = "Age (centered)",
@@ -60,9 +59,13 @@ fast.int(data = cohen_exercise,
 You can also put the output into a custom object and remove key components:
 
 
-
-
 ```{r, eval=TRUE}
+library(fastInteraction)
+
+new_axis_labels <- list(criterion = "Endurance",
+                        predictor = "Age (centered)",
+                        moderator = "Exercise (centered)")
+
 myoutput <- fast.int(data = cohen_exercise,
                criterion = endurance,
                predictor = age,

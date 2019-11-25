@@ -51,8 +51,6 @@ labels), displays regression results to the console, and creates a Word
 document with the regression tables in APA style.
 
 ``` r
-library(fastInteraction)
-
 new_axis_labels <- list(criterion = "Endurance",
                         predictor = "Age (centered)",
                         moderator = "Exercise (centered)")
@@ -66,53 +64,16 @@ fast.int(data = cohen_exercise,
          filename = "tables.doc")
 ```
 
-    ## 
-    ## 
-    ## 
-    ## 
-    ## Regression results using endurance as the criterion
-    ##  
-    ## 
-    ##     Predictor       b        b_95_CI sr2   sr2_95_CI     p             Fit
-    ##   (Intercept) 25.89** [24.61, 27.16]                 0.000                
-    ##           age -0.26** [-0.39, -0.14] .05  [.00, .11] 0.000                
-    ##      exercise  0.97**   [0.70, 1.24] .17  [.08, .25] 0.000                
-    ##  age:exercise  0.05**   [0.02, 0.07] .04 [-.00, .08] 0.001                
-    ##                                                                R2 = .206**
-    ##                                                            95% CI[.12,.28]
-    ##                                                                           
-    ## 
-    ## Note. A significant b-weight indicates the semi-partial correlation is also significant.
-    ## b represents unstandardized regression weights. 
-    ## sr2 represents the semi-partial correlation squared.
-    ## Square brackets are used to enclose the lower and upper limits of a confidence interval.
-    ## * indicates p < .05. ** indicates p < .01.
-    ##  
-    ## 
-    ## Regression overall R2: R2 = 0.206, F(3, 241) = 20.86, p = 0.000
-    ## 
-    ## Simple slope table
-    ## ------------------
-    ## 
-    ##       moderator moderator.value b1.slope   b1.LL   b1.UL b0.intercept
-    ##  -1 SD exercise      -4.775e+00 -0.48729 -0.6688 -0.3058        21.24
-    ##   Mean exercise      -1.073e-15 -0.26169 -0.3879 -0.1355        25.89
-    ##  +1 SD exercise       4.775e+00 -0.03609 -0.2139  0.1417        30.53
-    ##    b1.SE       t      p
-    ##  0.09214 -5.2889 0.0000
-    ##  0.06406 -4.0848 0.0001
-    ##  0.09025 -0.3998 0.6896
-
-![](README_files/figure-markdown_github/unnamed-chunk-3-1.png)
-
-    ## 
-    ## 3D graph - see Viewer panel in RStudio
-    ## 2D graph - see Plots panel in RStudio
-
 You can also put the output into a custom object and remove key
 components:
 
 ``` r
+library(fastInteraction)
+
+new_axis_labels <- list(criterion = "Endurance",
+                        predictor = "Age (centered)",
+                        moderator = "Exercise (centered)")
+
 myoutput <- fast.int(data = cohen_exercise,
                criterion = endurance,
                predictor = age,
