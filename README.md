@@ -93,7 +93,7 @@ myoutput <- fast.int(data = cohen_exercise,
 ``` r
 # Obtain the ggplot graph presented in the Plots tab
 formatted.ggplot.graph <- myoutput$graph2D.formatted
-# ggsave("my_2D_graph.pdf", formatted.ggplot.graph)
+ggsave("my_2D_graph.pdf", formatted.ggplot.graph)
 
 
 # Obtain the ggplot graph presented prior to the formatting commands being applied
@@ -104,7 +104,7 @@ custom.formatted.ggplot.graph <- unformatted.ggplot.graph +
                                    coord_cartesian(ylim = c(0, 60)) +
                                    theme_grey(18)
 
-# ggsave("my_custom_2D_graph.pdf", custom.formatted.ggplot.graph)
+ggsave("my_custom_2D_graph.pdf", custom.formatted.ggplot.graph)
 ```
 
 ![2D
