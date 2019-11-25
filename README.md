@@ -114,15 +114,16 @@ graph until it is in the orientation you like in the Viewer panel of
 RStudio and then use the buttons in the Viewer to save it. Note that
 with this approach, the larger the graph is on your screen the larger
 the dimensions of the final graph will be. Make it very large to obtain
-a version of the graph that is high enough for publication.
+a version of the graph that has a resolution sufficiently high for
+publication.
 
-A beter, but more complicated approach for obtaining a graph for
-publication is to install orca [install link
+A beter, but more complicated, approach for obtaining a publication
+quality graph is to install orca [install link
 here](https://github.com/plotly/orca). I suggest using Method 4 Stand
-alone binaries since it is a bit easier.
+alone binaries because it is a bit easier.
 
-A complication with saving the 3D graph is that you need to set the
-orientationn of the graph in the code you use to create the graph. I
+A complication with saving the 3D graph via orca is that you need to set
+the orientationn of the graph in the code you use to create the graph. I
 suggest using fast.int command several times, each time varing the
 camera positions (cam.position), to obtain the desired graph
 orientation. Once the desired orientation is obtained, the graph can be

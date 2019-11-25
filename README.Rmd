@@ -97,11 +97,11 @@ custom.formatted.ggplot.graph <- unformatted.ggplot.graph +
 ```
 
 ### 3D Graphing with myoutput object (created above)
-Saving the 3D graph is a bit tricky. The easiest way is to adjust the graph until it is in the orientation you like in the Viewer panel of RStudio and then use the buttons in the Viewer to save it. Note that with this approach, the larger the graph is on your screen the larger the dimensions of the final graph will be. Make it very large to obtain a version of the graph that is high enough for publication.
+Saving the 3D graph is a bit tricky. The easiest way is to adjust the graph until it is in the orientation you like in the Viewer panel of RStudio and then use the buttons in the Viewer to save it. Note that with this approach, the larger the graph is on your screen the larger the dimensions of the final graph will be. Make it very large to obtain a version of the graph that has a resolution sufficiently high for publication.
 
-A beter, but more complicated approach for obtaining a graph for publication is to install orca [install link here](https://github.com/plotly/orca). I suggest using Method 4 Stand alone binaries since it is a bit easier. 
+A beter, but more complicated, approach for obtaining a publication quality graph is to install orca [install link here](https://github.com/plotly/orca). I suggest using Method 4 Stand alone binaries because it is a bit easier. 
 
-A complication with saving the 3D graph is that you need to set the orientationn of the graph in the code you use to create the graph. I suggest using fast.int command several times, each time varing the camera positions (cam.position), to obtain the desired graph orientation. Once the desired orientation is obtained, the graph can be saved with the orca command. You specify the camera position using theta (horizontal rotation angle in degrees 0 to 180, most likely), phi (vertical rotation angle in degrees 0 to 90, most likely), and distance (from the origin of the graph, start with 3 or 4 and increase this value if needed). 
+A complication with saving the 3D graph via orca is that you need to set the orientationn of the graph in the code you use to create the graph. I suggest using fast.int command several times, each time varing the camera positions (cam.position), to obtain the desired graph orientation. Once the desired orientation is obtained, the graph can be saved with the orca command. You specify the camera position using theta (horizontal rotation angle in degrees 0 to 180, most likely), phi (vertical rotation angle in degrees 0 to 90, most likely), and distance (from the origin of the graph, start with 3 or 4 and increase this value if needed). 
 
 ```{r, eval=FALSE}
 library(fastInteraction)
