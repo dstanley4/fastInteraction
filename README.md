@@ -92,8 +92,11 @@ myoutput <- fast.int(data = cohen_exercise,
 
 ``` r
 # Obtain the ggplot graph presented in the Plots tab
+
+
 formatted.ggplot.graph <- myoutput$graph2D.formatted
-ggsave("graph2D.gif", formatted.ggplot.graph)
+
+ggsave("graph2D.png", formatted.ggplot.graph)
 ```
 
 ![2D
@@ -104,13 +107,15 @@ graph](https://github.com/dstanley4/fastInteraction/blob/master/vignettes/graph2
 ``` r
 # Obtain the ggplot graph presented prior to the formatting commands being applied
 # If yout want to modify this graph simply add your own ggplot command as illustrated below: 
+
+
 unformatted.ggplot.graph <- myoutput$graph2D.unformatted
 
 custom.formatted.ggplot.graph <- unformatted.ggplot.graph +
                                    coord_cartesian(ylim = c(0, 60)) +
                                    theme_grey(18)
 
-ggsave("graph2Dcustom.gif", custom.formatted.ggplot.graph)
+ggsave("graph2Dcustom.png", custom.formatted.ggplot.graph)
 ```
 
 ### 3D Graphing with myoutput object (created above)
@@ -159,13 +164,14 @@ myoutput <- fast.int(data = cohen_exercise,
                cam.position = cam_position,
                filename = "tables.doc")
 
-# The plot.ly object can be obtained with the code below:
+
 graph3D <- myoutput$graph3D
 
 library(plotly)
 # This next line requires you install orca software as per link above
 # This lines saves 1000 pixel by 1000 pixel version of the graph in PNG format
-orca(graph3D, file = "plot.png", width = 1000, height = 1000)
+
+orca(graph3D, file = "graph3D.png", width = 1000, height = 1000)
 ```
 
 ![3D
