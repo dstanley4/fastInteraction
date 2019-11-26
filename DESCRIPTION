@@ -3,7 +3,7 @@ Type: Package
 Title: Create regression output, 2D/3D surface plots, and APA tables for continuous variable regression interactions (moderated multiple regression)
 Version: 0.1.0
 Authors@R: person("David", "Stanley", , "dstanley@uoguelph.ca", role = c("aut", "cre"))
-Description: Conducting a moderated regression can require a large number of steps. This package seeks to minimize the number of steps and created need materials for articles (graphs and tables).
+Description: Conducting a moderated regression can require a large number of steps which are simplified with this package. Easily create regression objects, 2D/3D surface plots, APA tables, and console output.
 Encoding: UTF-8
 LazyData: true
 Imports:
@@ -18,7 +18,7 @@ Imports:
     pracma,
     knitr
 License: MIT License + file LICENSE
-Date: 2019-11-08
+Date: 2019-11-26
 RoxygenNote: 6.1.1
 Depends:
     R (>= 3.1.2)

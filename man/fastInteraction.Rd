@@ -11,7 +11,7 @@ Moderated mulitple regression is a common analysis in psychology. Unfortunately,
 Package: \tab fastInteraction\cr
 Type: \tab Package\cr
 Version: \tab 0.1.0\cr
-Date: \tab 2019-11-08\cr
+Date: \tab 2019-11-26\cr
 License: \tab MIT\cr
 }
 }
