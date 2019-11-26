@@ -1,4 +1,4 @@
-![](https://github.com/dstanley4/fastInteraction/blob/master/vignettes/fastinteraction.gif)
+![](https://github.com/dstanley4/fastInteraction/blob/master/vignettes/fastInteraction.gif)
 
 fastInteraction Version 0.1.0
 =============================
