@@ -13,8 +13,8 @@ graphs of the moderated regression using ggplot and plot.ly,
 respectively. Additionally, regression results of the analyses are
 displayed in the console, output in list format, and embeded in APA
 style tables (as per
-[apaTables](https://cran.r-project.org/web/packages/apaTables/vignettes/apaTables.html))
-if a filename (ending in .doc or .rtf) is specified.
+[apaTables](https://cran.r-project.org/package=apaTables)) if a filename
+(ending in .doc or .rtf) is specified.
 
 The development version of fastInteraction hosted here on Github.
 Eventually, a version will be posted to the CRAN.

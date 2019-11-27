@@ -41,6 +41,7 @@ fast.int(data = cohen_exercise,
          moderator = exercise,
          center.predictors = TRUE)
 
+\donttest{
  # Save the ouput tables in APA style by adding a filename
  fast.int(data = cohen_exercise,
          criterion = endurance,
@@ -62,6 +63,6 @@ fast.int(data = cohen_exercise,
          center.predictors = TRUE,
          axis.labels = new_axis_labels,
          filename = "tables.doc")
-
+}
 
 }

@@ -1,7 +1,7 @@
 Package: fastInteraction
 Type: Package
-Title: Create regression output, 2D/3D surface plots, and APA tables for continuous variable regression interactions (moderated multiple regression)
-Version: 0.1.0
+Title: Create Regression Output, 2D/3D Surface Plots, and APA Tables for Continuous Variable Regression Interactions (Moderated Multiple Regression)
+Version: 0.1.1
 Authors@R: person("David", "Stanley", , "dstanley@uoguelph.ca", role = c("aut", "cre"))
 Description: Conducting a moderated regression can require a large number of steps which are simplified with this package. Easily create regression objects, 2D/3D surface plots, APA tables, and console output.
 Encoding: UTF-8

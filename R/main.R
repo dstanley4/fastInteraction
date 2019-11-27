@@ -18,6 +18,7 @@
 #'          moderator = exercise,
 #'          center.predictors = TRUE)
 #'
+#' \donttest{
 #'  # Save the ouput tables in APA style by adding a filename
 #'  fast.int(data = cohen_exercise,
 #'          criterion = endurance,
@@ -39,7 +40,7 @@
 #'          center.predictors = TRUE,
 #'          axis.labels = new_axis_labels,
 #'          filename = "tables.doc")
-#'
+#' }
 #'
 #' @return
 #' Returns a list with many objects (tables/graphs) that are displayed on screen when printed.
