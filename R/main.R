@@ -1,5 +1,4 @@
-
-#' Creates regression output for overall moderation and simple slopes analysis (2D/3D plots)
+#' Creates moderated regression output and graphs (2D/3D)
 #' @param data Name of data frame
 #' @param criterion Name of criterion variable
 #' @param predictor Name of predictor variable

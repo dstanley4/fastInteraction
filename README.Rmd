@@ -57,7 +57,7 @@ fast.int(data = cohen_exercise,
          axis.labels = new_axis_labels)
 ```
 
-If you specify a path for the files with a filename (e.g., "tables.doc") then the tables below will be created.
+If you specify a path with a filename (e.g., "tables.doc") then the tables below will be created in Word document.
 
 ![Tables](https://github.com/dstanley4/fastInteraction/blob/master/vignettes/tables_apa.gif)
 
