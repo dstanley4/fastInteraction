@@ -2,15 +2,15 @@
 #'\tabular{ll}{
 #'Package: \tab fastInteraction\cr
 #'Type: \tab Package\cr
-#'Version: \tab 0.1.1\cr
-#'Date: \tab 2019-11-26\cr
+#'Version: \tab 0.1.2\cr
+#'Date: \tab 2019-12-02\cr
 #'License: \tab MIT\cr
 #'}
 #'
 #'@name fastInteraction
 #'@aliases fastInteraction
 #'@docType package
-#'@title Create Regression Output, 2D/3D Surface Plots, and APA Tables for Continuous Variable Regression Interactions (Moderated Multiple Regression)
+#'@title Continuous variable interaction output and graphs (2D/3D)
 #'@author
 #'\tabular{ll}{
 #'Author: \tab David J. Stanley \email{dstanley@@uoguelph.ca}\cr
