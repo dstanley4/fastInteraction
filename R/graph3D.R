@@ -1,4 +1,4 @@
-#' Creates a MMR plot
+#' Creates moderated regression 3D graph
 #' @param lm_object Name of independent variable 1 column in data frame
 #' @param criterion Name of independent variable 2 column in data frame
 #' @param predictor Name of dependent variable column in data frame
@@ -15,18 +15,19 @@
 #' lm_object <- lm(exam ~ anxiety + preparation + anxiety*preparation, data = grades)
 #'
 #' # Example 1: Not mean centered
-#' fast.plot(lm_object,
-#'          criterion = exam,
-#'          predictor = preparation,
-#'          moderator = anxiety)
+#' graph3D <- fast.plot(lm_object,
+#'               criterion = exam,
+#'               predictor = preparation,
+#'               moderator = anxiety)
+#' print(graph3D)
 #'
 #' # Example 2: Mean centered
-#' fast.plot(lm_object,
-#'          criterion = exam,
-#'          predictor = preparation,
-#'          moderator = anxiety,
-#'          center.predictors = TRUE)
-#'
+#' graph3Dcentered <- fast.plot(lm_object,
+#'                         criterion = exam,
+#'                         predictor = preparation,
+#'                         moderator = anxiety
+#'                         center.predictors = TRUE)
+#' print(graph3Dcentered)
 #' @export
 fast.plot <- function(lm_object, criterion, predictor, moderator, center.predictors = FALSE, axis.labels = NULL, cam.position = NULL) {
 
