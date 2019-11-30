@@ -64,12 +64,12 @@ fast.plot <- function(lm_object, criterion, predictor, moderator, center.predict
   is.criterion  <- is.valid.name(criterion.sub, data.col.names)
 
   if (is.criterion==FALSE) {
-    cat("A valid dependent variable (criterion) must be specified.\n\n")
+    message("A valid dependent variable (criterion) must be specified.\n\n")
     return(FALSE)
   }
 
   if (all(is.predictor==TRUE & is.moderator==TRUE)==FALSE) {
-    cat("Two valid predictor/ variables must be specified (predictor and moderator).\n\n")
+    mesasge("Two valid predictor/ variables must be specified (predictor and moderator).\n\n")
     return(FALSE)
   }
 
