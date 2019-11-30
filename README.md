@@ -65,9 +65,11 @@ fast.int(data = cohen_exercise,
          predictor = age,
          moderator = exercise,
          center.predictors = TRUE,
-         axis.labels = new_axis_labels,
-         filename = "tables.doc")
+         axis.labels = new_axis_labels)
 ```
+
+If you specify a path for the files with a filename (e.g., “tables.doc”)
+then the tables below will be created.
 
 ![Tables](https://github.com/dstanley4/fastInteraction/blob/master/vignettes/tables_apa.gif)
 
@@ -88,8 +90,7 @@ myoutput <- fast.int(data = cohen_exercise,
                predictor = age,
                moderator = exercise,
                center.predictors = TRUE,
-               axis.labels = new_axis_labels,
-               filename = "tables.doc")
+               axis.labels = new_axis_labels)
 ```
 
 ### 2D Graphing (as displayed) with myoutput object (created above)
@@ -165,8 +166,7 @@ myoutput <- fast.int(data = cohen_exercise,
                moderator = exercise,
                center.predictors = TRUE,
                axis.labels = new_axis_labels,
-               cam.position = cam_position,
-               filename = "tables.doc")
+               cam.position = cam_position)
 
 
 graph3D <- myoutput$graph3D
