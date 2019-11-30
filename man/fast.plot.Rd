@@ -34,16 +34,20 @@ head(grades)
 lm_object <- lm(exam ~ anxiety + preparation + anxiety*preparation, data = grades)
 
 # Example 1: Not mean centered
-fast.plot(lm_object,
-         criterion = exam,
-         predictor = preparation,
-         moderator = anxiety)
+graph3D <- fast.plot(lm_object,
+              criterion = exam,
+              predictor = preparation,
+              moderator = anxiety)
+print(graph3D)
 
 # Example 2: Mean centered
-fast.plot(lm_object,
-         criterion = exam,
-         predictor = preparation,
-         moderator = anxiety,
-         center.predictors = TRUE)
-
+graph3Dcentered <- fast.plot(lm_object,
+                        criterion = exam,
+                        predictor = preparation,
+                        moderator = anxiety
+                        center.predictors = TRUE)
+print(graph3Dcentered)
+}
+\references{
+Cohen, J., Cohen, P., West, S. G., & Aiken, L. S. (2003). Applied multiple regression. Correlation Analysis for the Behavioral Sciences (3rd Edition). Lawerence Earlbaum Associates: London. ISBN-13: 978-0805822236
 }

@@ -6,11 +6,11 @@
 #' @param moderator Name of predictor variable
 #' @param axis.labels Optional. Override column names as axis labels by sending in a list of new names.
 #' @param center.predictors Boolean. Indicate if predictors hsould be centered. Default is FALSE.
-#' @param filename Optional. File name such as "myfile.doc" or "myfile.rtf" for APA style regression tables
+#' @param path Optional. If specified creates a file at the path. Use a filename as "myfile.doc" or "myfile.rtf" for regression tables
 #' @param cam.position A list with theta (degrees), phi (degrees), and distance values. Suggest default distance of 3.
 #' @references
 #' Cohen, J., Cohen, P., West, S. G., & Aiken, L. S. (2003). Applied multiple regression. Correlation Analysis for the Behavioral Sciences (3rd Edition). Lawerence Earlbaum Associates: London. ISBN-13: 978-0805822236
-#' @return A list with the regression.lm.object (regression for overall analysis), apa.table (a data frame with the results table of the overall analysis), Overall.R2.F (a string with results for overall percxentage of variance), graph2D (a formatted ggplot graph), graph2Dunformatted (an unformatted ggplot graph), and graph3D (a plot.ly surface graph).
+#' @return A list with seven objects. Specifically the objects: regression.lm.object (regression for overall analysis), apa.table (a data frame with the results table of the overall analysis), Overall.R2.F (a string with results for overall percxentage of variance), simple.slope.table (a table of the simple slopes), graph2D (a formatted ggplot graph), graph2Dunformatted (an unformatted ggplot graph), and graph3D (a plot.ly surface graph).
 #' @examples
 #'
 #' # Compare results to Table 7.4.1 from Cohen, Cohen, West, and Aiken (2003)
@@ -22,14 +22,11 @@
 #'                 center.predictors = TRUE)
 #'
 #' print(results)
-#'
-#' @return
-#' Returns a list with many objects (tables/graphs) that are displayed on screen when printed.
 #' @export
-fast.int <- function(data, criterion, predictor, moderator, center.predictors = FALSE, axis.labels = NULL, filename = NULL, cam.position = NULL) {
+fast.int <- function(data, criterion, predictor, moderator, center.predictors = FALSE, axis.labels = NULL, path = NULL, cam.position = NULL) {
 
   make_file_flag = FALSE
-  if (!is.null(filename)) {
+  if (!is.null(path)) {
     make_file_flag = TRUE
   }
 
@@ -278,7 +275,7 @@ fast.int <- function(data, criterion, predictor, moderator, center.predictors = 
     # Is 3D export function installed...
     # is.xxx.installed <- sum(installed.packages()[,1] == "apaTables")
 
-    write.rtf.table.fastint(filename = filename,
+    write.rtf.table.fastint(filename = path,
                    txt.body = txt_body,
                    table.title = table_title,
                    table.note = table_note,

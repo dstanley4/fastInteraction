@@ -5,7 +5,7 @@
 \title{Creates regression output for overall moderation and simple slopes analysis (2D/3D plots)}
 \usage{
 fast.int(data, criterion, predictor, moderator,
-  center.predictors = FALSE, axis.labels = NULL, filename = NULL,
+  center.predictors = FALSE, axis.labels = NULL, path = NULL,
   cam.position = NULL)
 }
 \arguments{
@@ -21,12 +21,12 @@ fast.int(data, criterion, predictor, moderator,
 
 \item{axis.labels}{Optional. Override column names as axis labels by sending in a list of new names.}
 
-\item{filename}{Optional. File name such as "myfile.doc" or "myfile.rtf" for APA style regression tables}
+\item{path}{Optional. If specified creates a file at the path. Use a filename as "myfile.doc" or "myfile.rtf" for regression tables}
 
 \item{cam.position}{A list with theta (degrees), phi (degrees), and distance values. Suggest default distance of 3.}
 }
 \value{
-Returns a list with many objects (tables/graphs) that are displayed on screen when printed.
+A list with seven objects. Specifically the objects: regression.lm.object (regression for overall analysis), apa.table (a data frame with the results table of the overall analysis), Overall.R2.F (a string with results for overall percxentage of variance), simple.slope.table (a table of the simple slopes), graph2D (a formatted ggplot graph), graph2Dunformatted (an unformatted ggplot graph), and graph3D (a plot.ly surface graph).
 }
 \description{
 Creates regression output for overall moderation and simple slopes analysis (2D/3D plots)
@@ -35,34 +35,14 @@ Creates regression output for overall moderation and simple slopes analysis (2D/
 
 # Compare results to Table 7.4.1 from Cohen, Cohen, West, and Aiken (2003)
 
-fast.int(data = cohen_exercise,
-         criterion = endurance,
-         predictor = age,
-         moderator = exercise,
-         center.predictors = TRUE)
+results <- fast.int(data = cohen_exercise,
+                criterion = endurance,
+                predictor = age,
+                moderator = exercise,
+                center.predictors = TRUE)
 
-\donttest{
- # Save the ouput tables in APA style by adding a filename
- fast.int(data = cohen_exercise,
-         criterion = endurance,
-         predictor = age,
-         moderator = exercise,
-         center.predictors = TRUE,
-         filename = "tables.doc")
-
-
-# Add custom graph labels
-new_axis_labels <- list(criterion = "Endurance",
-                        predictor = "Age (centered)",
-                        moderator = "Exercise (centered)")
-
-fast.int(data = cohen_exercise,
-         criterion = endurance,
-         predictor = age,
-         moderator = exercise,
-         center.predictors = TRUE,
-         axis.labels = new_axis_labels,
-         filename = "tables.doc")
+print(results)
 }
-
+\references{
+Cohen, J., Cohen, P., West, S. G., & Aiken, L. S. (2003). Applied multiple regression. Correlation Analysis for the Behavioral Sciences (3rd Edition). Lawerence Earlbaum Associates: London. ISBN-13: 978-0805822236
 }
