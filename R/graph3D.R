@@ -6,6 +6,8 @@
 #' @param center.predictors test
 #' @param axis.labels test
 #' @param cam.position A list with theta (degrees), phi (degrees), and distance values. Suggest default distance of 3.
+#' @references
+#' Cohen, J., Cohen, P., West, S. G., & Aiken, L. S. (2003). Applied multiple regression. Correlation Analysis for the Behavioral Sciences (3rd Edition). Lawerence Earlbaum Associates: London. ISBN-13: 978-0805822236
 #' @return plotly object
 #' @examples
 #' head(grades)
