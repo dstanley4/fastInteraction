@@ -2,11 +2,18 @@
 % Please edit documentation in R/main.R
 \name{fast.int}
 \alias{fast.int}
-\title{Creates regression output for overall moderation and simple slopes analysis (2D/3D plots)}
+\title{Creates moderated regression output and graphs (2D/3D)}
 \usage{
-fast.int(data, criterion, predictor, moderator,
-  center.predictors = FALSE, axis.labels = NULL, path = NULL,
-  cam.position = NULL)
+fast.int(
+  data,
+  criterion,
+  predictor,
+  moderator,
+  center.predictors = FALSE,
+  axis.labels = NULL,
+  path = NULL,
+  cam.position = NULL
+)
 }
 \arguments{
 \item{data}{Name of data frame}
@@ -29,7 +36,7 @@ fast.int(data, criterion, predictor, moderator,
 A list with seven objects. Specifically the objects: regression.lm.object (regression for overall analysis), apa.table (a data frame with the results table of the overall analysis), Overall.R2.F (a string with results for overall percxentage of variance), simple.slope.table (a table of the simple slopes), graph2D (a formatted ggplot graph), graph2Dunformatted (an unformatted ggplot graph), and graph3D (a plot.ly surface graph).
 }
 \description{
-Creates regression output for overall moderation and simple slopes analysis (2D/3D plots)
+Creates moderated regression output and graphs (2D/3D)
 }
 \examples{
 

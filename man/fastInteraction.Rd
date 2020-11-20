@@ -3,15 +3,14 @@
 \docType{package}
 \name{fastInteraction}
 \alias{fastInteraction}
-\alias{fastInteraction-package}
-\title{Create Regression Output, 2D/3D Surface Plots, and APA Tables for Continuous Variable Regression Interactions (Moderated Multiple Regression)}
+\title{Continuous variable interaction output and graphs (2D/3D)}
 \description{
 Moderated mulitple regression is a common analysis in psychology. Unfortunately, there are a large number of steps associated with creating the desired output and code for both 2D and 3D graphs of the moderated regression. This package conducts the required analyses and creates both 2D and 3D graphs of the moderated regression using ggplot and plot.ly, respectively. Additionally, regression results of the analyses are displayed in the console, output in list format, and embeded in APA style tables#'
 \tabular{ll}{
 Package: \tab fastInteraction\cr
 Type: \tab Package\cr
-Version: \tab 0.1.1\cr
-Date: \tab 2019-11-26\cr
+Version: \tab 0.1.2\cr
+Date: \tab 2019-12-02\cr
 License: \tab MIT\cr
 }
 }

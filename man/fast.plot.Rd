@@ -2,10 +2,17 @@
 % Please edit documentation in R/graph3D.R
 \name{fast.plot}
 \alias{fast.plot}
-\title{Creates a MMR plot}
+\title{Creates moderated regression 3D graph}
 \usage{
-fast.plot(lm_object, criterion, predictor, moderator,
-  center.predictors = FALSE, axis.labels = NULL, cam.position = NULL)
+fast.plot(
+  lm_object,
+  criterion,
+  predictor,
+  moderator,
+  center.predictors = FALSE,
+  axis.labels = NULL,
+  cam.position = NULL
+)
 }
 \arguments{
 \item{lm_object}{Name of independent variable 1 column in data frame}
@@ -26,7 +33,7 @@ fast.plot(lm_object, criterion, predictor, moderator,
 plotly object
 }
 \description{
-Creates a MMR plot
+Creates moderated regression 3D graph
 }
 \examples{
 head(grades)

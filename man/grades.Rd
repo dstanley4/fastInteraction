@@ -5,13 +5,22 @@
 \alias{grades}
 \alias{cohen_exercise}
 \title{Data from Cohen, Cohen, West, and Aiken (2003) Chapter 7 (mcfanda GitHub)}
-\format{A data frame of fake data with 245 rows and 4 variables:
+\format{
+A data frame of fake data with 245 rows and 4 variables:
 \describe{
   \item{id}{Participant identification number}
   \item{age}{Participant age in years}
   \item{exercise}{Number of years of excercise}
   \item{endurance}{Physical endurance}
-}}
+}
+
+A data frame of fake data with 100 rows and 3 variables:
+\describe{
+  \item{anxiety}{Anxiety rating}
+  \item{preparation}{Preparation rating}
+  \item{exam}{Exam grade}
+}
+}
 \source{
 \url{https://github.com/mcfanda/gamlj_docs/blob/master/data/exercise.csv}
 }
