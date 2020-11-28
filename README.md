@@ -68,8 +68,8 @@ fast.int(data = cohen_exercise,
          axis.labels = new_axis_labels)
 ```
 
-If you specify a path with a filename (e.g., “tables.doc”) then the
-tables below will be created in Word document.
+If you specify a path with a filename (e.g., path = “tables.doc”) then
+the tables below will be created in Word document.
 
 ![Tables](https://github.com/dstanley4/fastInteraction/blob/master/vignettes/tables_apa.gif)
 
@@ -92,6 +92,11 @@ myoutput <- fast.int(data = cohen_exercise,
                center.predictors = TRUE,
                axis.labels = new_axis_labels)
 ```
+
+    ## Registered S3 methods overwritten by 'broom':
+    ##   method            from  
+    ##   tidy.glht         jtools
+    ##   tidy.summary.glht jtools
 
 ### 2D Graphing (as displayed) with myoutput object (created above)
 
