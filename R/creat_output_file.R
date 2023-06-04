@@ -2,9 +2,10 @@ output_rtf_name_overall_lm <- function(column_name) {
   switch(column_name,
          Predictor="Predictor",
          b = "{\\i b}",
-         b_95_CI = "{\\i b \\par 95% CI\\par[LL, UL]}",
+         b_95_CI = "95% CI",
+         Unique_R2 = "Unique {\\i R\\super 2 \\nosupersub}",
          sr2 = "{\\i sr\\super 2 \\nosupersub}",
-         sr2_95_CI= "{\\i sr\\super 2 \\nosupersub \\par 95% CI\\par[LL, UL]}",
+         sr2_95_CI= "95% CI",
          Fit = "Fit",
          moderator = "Moderator",
          moderator.value = "Moderator Value",
@@ -27,6 +28,7 @@ output_column_width_overall_lm  <- function(column_name) {
          Predictor = wide*1.5,
          b         = narrow*1.5,
          b_95_CI   = wide*1.5,
+         Unique_R2 = narrow*.8,
          sr2       = narrow*.8,
          sr2_95_CI = wide*1.2,
          p         = narrow,
@@ -45,6 +47,7 @@ get_rtf_column_widths_overall_lm  <- function(df) {
   n <- names(df)
   width_out <- c()
   for (i in 1:length(n)) {
+    print(n[i])
     width_out[i] <-output_column_width_overall_lm(n[i])
   }
   return(width_out)
@@ -55,6 +58,7 @@ get_rtf_column_names_overall_lm  <- function(df) {
   n <- names(df)
   names_out <- c()
   for (i in 1:length(n)) {
+    print(n[i])
     names_out[i] <-output_rtf_name_overall_lm(n[i])
   }
   return(names_out)
