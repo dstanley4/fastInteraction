@@ -10,7 +10,7 @@
 #'@name fastInteraction
 #'@aliases fastInteraction
 #'@docType package
-#'@title Continuous variable interaction output and graphs (2D/3D)
+#'@title Continuous variable interaction output and graphs (2D and 3D)
 #'@author
 #'\tabular{ll}{
 #'Author: \tab David J. Stanley \email{dstanley@@uoguelph.ca}\cr
