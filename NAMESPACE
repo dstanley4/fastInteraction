@@ -3,6 +3,7 @@
 S3method(print,fastintoutput)
 export(fast.int)
 export(fast.plot)
+export(mr.plot)
 importFrom("dplyr","select")
 importFrom("forcats","fct_relevel")
 importFrom("ggplot2","aes")
