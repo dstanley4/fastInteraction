@@ -154,7 +154,7 @@ fast.int <- function(data, criterion, predictor, moderator, center.predictors = 
                                     y = criterion,
                                     group = as.factor(moderator),
                                     linetype = as.factor(moderator))) +
-    geom_line(size = 1)
+    geom_line(linewidth = 1)
 
   graph2D <- graph2D.unformatted +
     coord_cartesian(ylim = c(crit.min, crit.max)) +
